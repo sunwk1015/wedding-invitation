@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>우리 결혼합니다 - 모바일 청첩장</title>
+  <!-- 무료 저작권 웹폰트: 고운바탕 & 프리텐다드 -->
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  
+  <style>
+    :root {
+      --bg-color: #fdfbf7;
+      --point-color: #8c7355;
+      --point-light: #f3efe6;
+      --text-main: #2c2825;
+      --text-sub: #6e675f;
+      --border-color: #e8e2d9;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #e5e0d8;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    /* 스마트폰 반응형 컨테이너 */
+    .invitation-wrap {
+      width: 100%;
+      max-width: 440px;
+      background-color: var(--bg-color);
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* 스마트폰 화면에서는 그림자 없이 100% 꽉 차게 */
+    @media (max-width: 480px) {
+      body { background-color: var(--bg-color); }
+      .invitation-wrap { max-width: 100%; box-shadow: none; }
+    }
+
+    .serif { font-family: 'Gowun Batang', serif; }
+
+    section {
+      padding: 60px 24px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-title {
+      font-size: 16px;
+      color: var(--point-color);
+      letter-spacing: 3px;
+      margin-bottom: 28px;
+      font-weight: 700;
+    }
+
+    /* 애니메이션 효과 */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeUp 1.2s ease-out forwards; }
+
+    /* 1. 표지 섹션 */
+    .cover-section { padding-top: 50px; }
+    .cover-subtitle {
+      font-size: 12px;
+      letter-spacing: 4px;
+      color: var(--point-color);
+      margin-bottom: 12px;
+    }
+    .cover-title {
+      font-size: 26px;
+      margin-bottom: 28px;
+      line-height: 1.45;
+    }
+    .main-photo-frame {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      max-height: 460px;
+      border-radius: 200px 200px 12px 12px;
+      overflow: hidden;
+      margin-bottom: 28px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+    }
+    .main-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .cover-names {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+    .cover-info {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text-sub);
+    }
+
+    /* 2. 초대의 글 & 혼주 소개 */
+    .mini-illust {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 22px;
+      border-radius: 50%;
+      overflow: hidden;
+      background-color: var(--point-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-color);
+    }
+    .mini-illust img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .greeting-text {
+      font-size: 15px;
+      line-height: 2.1;
+      color: var(--text-sub);
+      margin-bottom: 35px;
+      word-break: keep-all;
+    }
+    .parents-box {
+      background-color: #f7f3eb;
+      padding: 22px 16px;
+      border-radius: 12px;
+      font-size: 16px;
+      line-height: 2.2;
+      border: 1px solid var(--border-color);
+    }
+    .parents-box .relation {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin: 0 8px;
+    }
+
+    /* 3. 세 번째 페이지: 예식 달력 & 9장 이상 갤러리 */
+    .calendar-card {
+      background-color: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px 16px;
+      margin-bottom: 40px;
+    }
+    .calendar-month {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--point-color);
+      margin-bottom: 14px;
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      font-size: 13px;
+      text-align: center;
+    }
+    .calendar-grid div { padding: 6px 0; }
+    .calendar-grid .sun { color: #d9534f; }
+    .calendar-grid .wedding-day {
+      background-color: var(--point-color);
+      color: #fff;
+      border-radius: 50%;
+      font-weight: 700;
+      width: 30px;
+      height: 30px;
+      line-height: 18px;
+      margin: 0 auto;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .gallery-item {
+      aspect-ratio: 1 / 1;
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: #eee;
+      cursor: pointer;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.25s ease;
+    }
+    .gallery-item:active img { transform: scale(0.96); }
+
+    /* 4. 식장 주소 */
+    .location-name {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .location-address {
+      font-size: 14px;
+      color: var(--text-sub);
+      margin-bottom: 18px;
+    }
+    .map-box {
+      width: 100%;
+      height: 200px;
+      background-color: #eee9df;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-sub);
+      margin-bottom: 16px;
+      font-size: 13px;
+      border: 1px solid var(--border-color);
+    }
+    .map-btn-group {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+    .btn-outline {
+      flex: 1;
+      padding: 11px 12px;
+      background-color: #fff;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    /* 5. 계좌번호 아코디언 */
+    .account-group {
+      margin-bottom: 12px;
+      text-align: left;
+    }
+    .account-toggle {
+      width: 100%;
+      padding: 15px 18px;
+      background-color: var(--point-light);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .account-list {
+      display: none;
+      background-color: #fff;
+      border: 1px solid var(--border-color);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      padding: 12px 16px;
+      margin-top: -6px;
+    }
+    .account-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px dashed var(--border-color);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .account-item:last-child { border-bottom: none; }
+    .btn-copy {
+      padding: 7px 13px;
+      background-color: var(--bg-color);
+      border: 1px solid var(--point-color);
+      color: var(--point-color);
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* 6. 마무리 인사 및 GitHub 푸터 */
+    .footer-section {
+      padding: 55px 24px 40px;
+      background-color: #f7f3eb;
+      border-bottom: none;
+    }
+    .btn-rsvp-open {
+      margin-top: 24px;
+      width: 100%;
+      max-width: 260px;
+      padding: 15px 24px;
+      background-color: var(--point-color);
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(140, 115, 85, 0.3);
+    }
+
+    /* GitHub 링크 공간 */
+    .github-footer {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+    .github-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      background-color: #24292f;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+    .github-link:hover { opacity: 0.85; }
+    .github-link svg {
+      width: 15px;
+      height: 15px;
+      fill: currentColor;
+    }
+
+    /* 참석 여부 모달 팝업 */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+    .modal-content {
+      background: var(--bg-color);
+      width: 100%;
+      max-width: 360px;
+      border-radius: 16px;
+      padding: 28px 22px;
+      text-align: center;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.22);
+    }
+    .modal-title { font-size: 20px; margin-bottom: 8px; }
+    .modal-desc {
+      font-size: 13.5px;
+      color: var(--text-sub);
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+    .form-group { margin-bottom: 12px; text-align: left; }
+    .form-group label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: var(--text-sub);
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 14px;
+      background-color: #fff;
+      font-family: inherit;
+    }
+    .modal-btns {
+      display: flex;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .modal-btns button {
+      flex: 1;
+      padding: 13px;
+      border-radius: 8px;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-submit { background-color: var(--point-color); color: #fff; }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-close { background-color: #e2ddd5; color: var(--text-main); }
+
+    /* 사진 확대 라이트박스 */
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1100;
+      padding: 16px;
+    }
+    .lightbox-overlay img {
+      max-width: 100%;
+      max-height: 85vh;
+      border-radius: 8px;
+    }
+
+    /* 토스트 알림 */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(44, 40, 37, 0.92);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-size: 13.5px;
+      z-index: 2000;
+      display: none;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="invitation-wrap">
+    
+    <!-- 1페이지: 표지 및 초대 문구 -->
+    <section class="cover-section fade-in">
+      <p class="cover-subtitle">WEDDING INVITATION</p>
+      <h1 class="cover-title serif">소중한 분들을<br>초대합니다</h1>
+      
+      <div class="main-photo-frame">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80" alt="메인 웨딩 사진">
+      </div>
+
+      <p class="cover-names serif">김신랑 · 이신부</p>
+      <div class="cover-info serif">
+        2026년 10월 24일 토요일 오후 2시<br>
+        서울 그랜드 웨딩홀 3층 단독홀
+      </div>
+    </section>
+
+    <!-- 2페이지: 간단한 이미지 & 인사말 & 혼주/신랑신부 이름 -->
+    <section>
+      <!-- 간단한 이미지 넣을 공간 (원형 포인트 프레임) -->
+      <div class="mini-illust">
+        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=300&q=80" alt="포인트 이미지">
+      </div>
+
+      <p class="greeting-text serif">
+        서로가 마주보며 다져온 사랑을<br>
+        이제 함께 한곳을 바라보며 걸어갈 수 있는<br>
+        큰 사랑으로 키우고자 합니다.<br>
+        저희 두 사람이 사랑의 이름으로 지켜나갈 수 있게<br>
+        앞날을 축복해 주시면 감사하겠습니다.
+      </p>
+
+      <!-- 혼주 및 신랑신부 이름 -->
+      <div class="parents-box serif">
+        <div><strong>김아버지 · 박어머니</strong><span class="relation">의 아들</span><strong>김신랑</strong></div>
+        <div><strong>이아버지 · 최어머니</strong><span class="relation">의 딸</span><strong>이신부</strong></div>
+      </div>
+    </section>
+
+    <!-- 3페이지: 예식 달력 & 9장 이상 사진 갤러리 -->
+    <section>
+      <h2 class="section-title serif">WEDDING DAY & GALLERY</h2>
+      
+      <!-- 예식 달력 -->
+      <div class="calendar-card serif">
+        <div class="calendar-month">2026. 10</div>
+        <div class="calendar-grid">
+          <div class="sun">일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
+          <div></div><div></div><div></div><div></div><div>1</div><div>2</div><div>3</div>
+          <div class="sun">4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>10</div>
+          <div class="sun">11</div><div>12</div><div>13</div><div>14</div><div>15</div><div>16</div><div>17</div>
+          <div class="sun">18</div><div>19</div><div>20</div><div>21</div><div>22</div><div>23</div><div class="wedding-day">24</div>
+          <div class="sun">25</div><div>26</div><div>27</div><div>28</div><div>29</div><div>30</div><div>31</div>
+        </div>
+      </div>
+
+      <!-- 9장 이상 사진 그리드 (터치 시 확대) -->
+      <div class="gallery-grid" id="galleryGrid">
+        <div class="gallery-item"><img src="https://picsum.photos/500/500?random=11" alt="갤러리 사진 1"></div>
+        <div class="gallery-item"><img src="https://picsum.photos/500/500?random=12" alt="갤러리 사진 2"></div>
+        <div class="gallery-item"><img src="https://picsum.photos/500/500?random=13" alt="갤러리 사진 3"></div>
+        <div class="gallery-item"><img src="https://picsum.photos/500/500?random=14" alt="갤러리 사진 4"></div>
+        <div class="gallery-item"><img src="https://picsum.photos/500/500?random=15" alt="갤러리 사진 5"></div>
+        <div class="gallery-item"><img src="https://picsum.photos/500/500?random=16" alt="갤러리 사진 6"></div>
+        <div class="gallery-item"><img src="https://picsum.photos/500/500?random=17" alt="갤러리 사진 7"></div>
+        <div class="gallery-item"><img src="https://picsum.photos/500/500?random=18" alt="갤러리 사진 8"></div>
+        <div class="gallery-item"><img src="https://picsum.photos/500/500?random=19" alt="갤러리 사진 9"></div>
+      </div>
+      <p style="font-size:12px; color:var(--text-sub); margin-top:12px;">사진을 터치하면 크게 보실 수 있습니다.</p>
+    </section>
+
+    <!-- 4페이지: 식장 주소 (오시는 길) -->
+    <section>
+      <h2 class="section-title serif">LOCATION</h2>
+      <p class="location-name serif">서울 그랜드 웨딩홀 3층 단독홀</p>
+      <p class="location-address" id="weddingAddress">서울특별시 강남구 테헤란로 123 (역삼동)</p>
+      
+      <div class="map-box">
+        <span>📍 약도 이미지 또는 지도 영역</span>
+        <span style="font-size:12px; margin-top:6px;">(2호선 역삼역 3번 출구 도보 5분)</span>
+      </div>
+      
+      <div class="map-btn-group">
+        <button class="btn-outline" onclick="copyText('서울특별시 강남구 테헤란로 123', '식장 주소가 복사되었습니다.')">주소 복사</button>
+        <a href="https://map.kakao.com" target="_blank" rel="noopener" class="btn-outline">카카오맵</a>
+        <a href="https://map.naver.com" target="_blank" rel="noopener" class="btn-outline">네이버지도</a>
+      </div>
+    </section>
+
+    <!-- 5페이지: 계좌번호 안내 -->
+    <section>
+      <h2 class="section-title serif">마음 전하실 곳</h2>
+      <p style="font-size:14px; color:var(--text-sub); margin-bottom:22px; line-height:1.7;">
+        참석이 어려우신 분들을 위해<br>축하의 마음을 전하실 곳을 안내드립니다.
+      </p>
+
+      <!-- 신랑측 계좌 -->
+      <div class="account-group">
+        <button class="account-toggle" onclick="toggleAccount('groom-acc')">
+          <span>신랑측 계좌번호 보기</span>
+          <span>▼</span>
+        </button>
+        <div id="groom-acc" class="account-list">
+          <div class="account-item">
+            <div><strong>신랑 김신랑</strong><br>카카오뱅크 3333-01-1234567</div>
+            <button class="btn-copy" onclick="copyText('3333-01-1234567', '신랑 계좌번호가 복사되었습니다.')">복사</button>
+          </div>
+          <div class="account-item">
+            <div><strong>혼주 김아버지</strong><br>국민은행 123456-04-123456</div>
+            <button class="btn-copy" onclick="copyText('123456-04-123456', '신랑측 혼주 계좌번호가 복사되었습니다.')">복사</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 신부측 계좌 -->
+      <div class="account-group">
+        <button class="account-toggle" onclick="toggleAccount('bride-acc')">
+          <span>신부측 계좌번호 보기</span>
+          <span>▼</span>
+        </button>
+        <div id="bride-acc" class="account-list">
+          <div class="account-item">
+            <div><strong>신부 이신부</strong><br>토스뱅크 1000-1234-5678</div>
+            <button class="btn-copy" onclick="copyText('1000-1234-5678', '신부 계좌번호가 복사되었습니다.')">복사</button>
+          </div>
+          <div class="account-item">
+            <div><strong>혼주 이아버지</strong><br>신한은행 110-123-456789</div>
+            <button class="btn-copy" onclick="copyText('110-123-456789', '신부측 혼주 계좌번호가 복사되었습니다.')">복사</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 마지막 페이지: 감사합니다 인사 & GitHub 주소 공간 -->
+    <section class="footer-section">
+      <h2 class="serif" style="font-size: 22px; margin-bottom: 12px;">감사합니다</h2>
+      <p class="serif" style="font-size: 14px; color: var(--text-sub); line-height: 1.9;">
+        언제나 따뜻한 마음으로 지켜봐 주시고<br>
+        귀한 걸음으로 축복해 주시는 모든 분들께<br>
+        진심으로 감사드립니다.
+      </p>
+      <button class="btn-rsvp-open" onclick="openModal()">참석 의사 전달하기</button>
+
+      <!-- GitHub 주소 넣을 공간 -->
+      <div class="github-footer">
+        <span>직접 만든 모바일 청첩장입니다</span>
+        <a id="githubLink" href="https://github.com/your-username/wedding-invitation" target="_blank" rel="noopener" class="github-link">
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+          </svg>
+          <span id="githubText">GitHub Repository</span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- 참석 가능 여부 팝업 (모달) -->
+  <div id="rsvpModal" class="modal-overlay">
+    <div class="modal-content">
+      <h3 class="modal-title serif">참석 여부 안내</h3>
+      <p class="modal-desc">
+        귀한 걸음 해주시는 분들을 위해<br>
+        정성껏 예식을 준비하고자 합니다.<br>
+        참석 여부를 알려주시면 감사하겠습니다.
+      </p>
+      <div class="form-group">
+        <label>구분</label>
+        <select id="rsvpSide">
+          <option value="신랑측">신랑측 하객</option>
+          <option value="신부측">신부측 하객</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>성함</label>
+        <input type="text" id="rsvpName" placeholder="성함을 입력해 주세요">
+      </div>
+      <div class="form-group">
+        <label>동반 인원 (본인 포함)</label>
+        <select id="rsvpCount">
+          <option value="1명">1명 (본인만)</option>
+          <option value="2명">2명</option>
+          <option value="3명">3명</option>
+          <option value="4명 이상">4명 이상</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>참석 및 식사 여부</label>
+        <select id="rsvpStatus">
+          <option value="참석(식사O)">참석 (식사 예정)</option>
+          <option value="참석(식사X)">참석 (식사 안 함)</option>
+          <option value="불참">마음만 전달 (불참)</option>
+        </select>
+      </div>
+      <div class="modal-btns">
+        <button class="btn-close" onclick="closeModal()">닫기</button>
+        <button class="btn-submit" id="rsvpSubmitBtn" onclick="submitRsvp()">전달하기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 갤러리 확대 모달 -->
+  <div id="lightbox" class="lightbox-overlay" onclick="this.style.display='none'">
+    <img id="lightboxImg" src="" alt="확대 사진">
+  </div>
+
+  <!-- 토스트 메시지 -->
+  <div id="toast" class="toast"></div>
+
+  <script>
+    /**
+     * ============================================================
+     * [환경 설정 영역] 추후 URL만 아래 큰따옴표 안에 넣어주시면 됩니다!
+     * ============================================================
+     */
+    const CONFIG = {
+      // 1. Google Apps Script 배포 후 발급받은 웹앱 URL (예: "https://script.google.com/macros/s/AKfycb.../exec")
+      GAS_WEB_APP_URL: "", 
+
+      // 2. 본인 GitHub 저장소 또는 프로필 주소
+      GITHUB_URL: "https://github.com/your-username/wedding-invitation",
+      GITHUB_LABEL: "github.com/your-username"
+    };
+
+    // GitHub 링크 초기화
+    const githubLinkEl = document.getElementById('githubLink');
+    const githubTextEl = document.getElementById('githubText');
+    if (CONFIG.GITHUB_URL) {
+      githubLinkEl.href = CONFIG.GITHUB_URL;
+      githubTextEl.textContent = CONFIG.GITHUB_LABEL || "GitHub Repository";
+    }
+
+    // 갤러리 이미지 클릭 시 확대 보기
+    document.querySelectorAll('.gallery-item img').forEach(img => {
+      img.addEventListener('click', () => {
+        document.getElementById('lightboxImg').src = img.src;
+        document.getElementById('lightbox').style.display = 'flex';
+      });
+    });
+
+    // 계좌번호 아코디언 토글
+    function toggleAccount(id) {
+      const el = document.getElementById(id);
+      el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+    }
+
+    // 토스트 알림 함수
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2500);
+    }
+
+    // 클립보드 복사 함수 (모바일 브라우저 호환)
+    function copyText(text, message) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => showToast(message));
+      } else {
+        const tempInput = document.createElement('textarea');
+        tempInput.value = text;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        showToast(message);
+      }
+    }
+
+    // 모달 열기/닫기
+    function closeModal() {
+      document.getElementById('rsvpModal').style.display = 'none';
+    }
+    function openModal() {
+      document.getElementById('rsvpModal').style.display = 'flex';
+    }
+
+    // 참석 여부(RSVP) Google Apps Script 연동 전송
+    async function submitRsvp() {
+      const side = document.getElementById('rsvpSide').value;
+      const name = document.getElementById('rsvpName').value.trim();
+      const count = document.getElementById('rsvpCount').value;
+      const status = document.getElementById('rsvpStatus').value;
+      const submitBtn = document.getElementById('rsvpSubmitBtn');
+
+      if (!name) {
+        showToast('성함을 입력해 주세요.');
+        return;
+      }
+
+      const payload = {
+        timestamp: new Date().toLocaleString('ko-KR'),
+        side: side,
+        name: name,
+        count: count,
+        status: status
+      };
+
+      // 아직 URL을 넣기 전이라면 테스트 모드로 동작
+      if (!CONFIG.GAS_WEB_APP_URL) {
+        console.log('[테스트 모드] 전송될 데이터:', payload);
+        showToast(`${name}님, 참석 의사가 전달되었습니다! (테스트 모드)`);
+        closeModal();
+        return;
+      }
+
+      try {
+        submitBtn.disabled = true;
+        submitBtn.textContent = '전송 중...';
+
+        // Google Apps Script CORS 정책 우회를 위해 text/plain 및 no-cors 활용 가능
+        await fetch(CONFIG.GAS_WEB_APP_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+
+        showToast(`${name}님, 소중한 참석 의사가 전달되었습니다!`);
+        document.getElementById('rsvpName').value = '';
+        closeModal();
+      } catch (error) {
+        console.error('RSVP 전송 오류:', error);
+        showToast('전송 중 오류가 발생했습니다. 다시 시도해 주세요.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '전달하기';
+      }
+    }
+  </script>
+</body>
+</html>
