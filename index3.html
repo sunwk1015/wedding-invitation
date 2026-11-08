@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, viewport-fit=cover, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="format-detection" content="telephone=no">
+
+  <!-- 카카오톡 등 SNS 공유 시 미리보기 Open Graph 메타 태그 -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="김도연 ♥ 이지유 결혼합니다.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=80">
+  <meta property="og:description" content="2027년 4월 10일 토요일 오후 5시 20분 | 더살롱드웨딩홀 1층 레터홀">
+  <meta property="og:locale" content="ko_KR">
+
+  <title>김도연 ♥ 이지유 결혼합니다.</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tone.js (저작권 걱정 없는 자체 생성 웨딩 피아노/오르골 BGM) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+  <!-- 무료 저작권 한글 웹폰트: 고운바탕(본문 명조), 나눔펜스크립트/개구(손편지), 프리텐다드(UI), Great Vibes(영문 캘리그라피) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Batang:wght@400;700&family=Great+Vibes&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            salon: {
+              bg: '#FFFFFF',
+              ivory: '#FAF8F5',
+              paper: '#F6F3EC',
+              point: '#304a2e',     /* 살롱드레터 메인 포레스트 그린 */
+              groom: '#576645',     /* 신랑 포인트 컬러 */
+              bride: '#b87272',     /* 신부 포인트 컬러 */
+              dark: '#262626',
+              text: '#333333',
+              sub: '#666666',
+              line: '#EAE6DF',
+              highlight: '#FFEFC6', /* 형광펜 하이라이트 컬러 */
+              cream: '#fff0d0'
+            }
+          },
+          fontFamily: {
+            serif: ['"Gowun Batang"', 'serif'],
+            sans: ['"Pretendard"', 'sans-serif'],
+            hand: ['"Nanum Pen Script"', '"Gaegu"', 'cursive'],
+            calli: ['"Great Vibes"', 'cursive']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --common-font-color: #333333;
+      --point-color1: #304a2e;
+      --point-color2: #262626;
+      --groom-color: #576645;
+      --bride-color: #b87272;
+      --main-svg-color: #fff0d0;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #E4E0D8;
+      color: var(--common-font-color);
+      font-family: 'Gowun Batang', serif;
+      -webkit-tap-highlight-color: transparent;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    .font-ui { font-family: 'Pretendard', sans-serif; }
+    .font-hand { font-family: 'Nanum Pen Script', cursive; }
+    .font-gaegu { font-family: 'Gaegu', cursive; }
+    .font-calli { font-family: 'Great Vibes', cursive; }
+
+    /* 타자기 커서 깜빡임 애니메이션 (샘플의 .Typewriter__cursor 재현) */
+    .Typewriter__cursor {
+      display: inline-block;
+      margin-left: 2px;
+      font-weight: 400;
+      color: #304a2e;
+      animation: Typewriter-cursor 0.9s infinite;
+    }
+    .Typewriter__cursor.light {
+      color: #fff0d0;
+    }
+    @keyframes Typewriter-cursor {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* SVG 캘리그라피 선 그리기 애니메이션 */
+    .svg-handwriting-path {
+      stroke-dasharray: 1200;
+      stroke-dashoffset: 1200;
+      animation: drawStroke 3.2s cubic-bezier(0.35, 0, 0.25, 1) forwards;
+    }
+    @keyframes drawStroke {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* 인트로 로딩 오버레이 페이드아웃 */
+    #intro-loading-overlay {
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    #intro-loading-overlay.hidden-overlay {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* 스크롤 페이드업 (AOS 스타일) */
+    .reveal {
+      opacity: 0;
+      transform: translate3d(0, 42px, 0);
+      transition: opacity 0.85s ease-out, transform 0.85s ease-out;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
+    /* 살롱드레터 특유의 오려 붙인 종이 조각(letter_text_line) 스타일 */
+    .letter_text_line {
+      display: inline-block;
+      padding: 4px 14px 5px 14px;
+      margin: 2px 0;
+      color: #2c2825;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.14));
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='100' viewBox='0 0 600 100' preserveAspectRatio='none'><path fill='%23ffffff' d='M9 7 L102 3 L198 5 L316 1 L431 5 L590 2 L599 17 L596 53 L600 85 L589 96 L476 92 L366 98 L253 94 L145 99 L6 95 L1 77 L4 39 Z'/></svg>");
+      transition: transform 0.25s ease;
+    }
+    .letter_blank_line {
+      display: block;
+      height: 10px;
+    }
+
+    /* 형광펜 밑줄 애니메이션 효과 */
+    .highlighter-span {
+      background: linear-gradient(180deg, transparent 35%, #FFEFC6 35%, #FFEFC6 90%, transparent 90%);
+      padding: 0 4px;
+      border-radius: 3px;
+    }
+
+    /* PC에서 스마트폰 프레임 모드 vs 모바일 꽉 찬 화면 */
+    @media (min-width: 768px) {
+      body.device-frame-mode {
+        padding: 28px 0;
+        background: radial-gradient(circle at center, #ECE8E1 0%, #D5CFC4 100%);
+      }
+      body.device-frame-mode #app-container {
+        max-width: 430px;
+        border-radius: 42px;
+        border: 10px solid #262422;
+        box-shadow: 0 28px 65px rgba(0, 0, 0, 0.22), 0 0 0 2px #524D48;
+      }
+    }
+    @media (max-width: 767px) {
+      body { background-color: #FFFFFF; }
+      #app-container { max-width: 100%; box-shadow: none; }
+    }
+
+    /* 가로 스크롤바 숨기기 */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* 스크롤 다운 유도 아이콘 */
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateY(0); opacity: 0.8; }
+      50% { transform: translateY(6px); opacity: 1; }
+    }
+    .scroll-indicator {
+      animation: scrollBounce 1.8s infinite;
+    }
+
+    /* 아코디언 애니메이션 */
+    .acc-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+    .acc-body.open {
+      max-height: 600px;
+    }
+  </style>
+</head>
+<body class="device-frame-mode min-h-screen flex flex-col items-center justify-start">
+
+  <!-- PC 상단 프리뷰 컨트롤 바 (휴대폰에서는 자동 숨김) -->
+  <div class="hidden md:flex items-center gap-3 mb-3 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full shadow-sm border border-salon-line text-xs font-ui text-salon-sub z-40">
+    <span class="font-semibold text-salon-dark">📱 화면 모드:</span>
+    <button id="btn-frame-toggle" onclick="toggleDeviceFrame()" class="px-3 py-1 rounded-full bg-salon-point text-white font-medium hover:opacity-90 transition">
+      스마트폰 프레임 뷰
+    </button>
+    <span class="text-salon-line">|</span>
+    <button onclick="replayAllWritingMotions()" class="px-3 py-1 rounded-full bg-salon-ivory border border-salon-line text-salon-point font-semibold hover:bg-salon-highlight transition">
+      ✍️ 글씨 쓰는 모션 다시 재생
+    </button>
+  </div>
+
+  <!-- 메인 모바일 청첩장 컨테이너 -->
+  <main id="app-container" class="w-full max-w-[430px] bg-salon-bg text-salon-text relative shadow-2xl mx-auto overflow-hidden transition-all duration-300">
+
+    <!-- 꽃잎 흩날리는 캔버스 오버레이 (샘플의 <canvas id="canvas"> 구현) -->
+    <canvas id="petal-canvas" class="fixed inset-0 pointer-events-none z-20"></canvas>
+
+    <!-- =====================================================
+         인트로 캘리그라피 & 타이핑 로딩 오버레이 (var="useLoading")
+         ===================================================== -->
+    <div id="intro-loading-overlay" class="fixed inset-0 z-50 bg-[#262626]/90 backdrop-blur-sm flex flex-col items-center justify-center px-6 text-center">
+      <!-- SVG 펜글씨 스트로크 드로잉 애니메이션 -->
+      <svg class="w-72 h-24 mb-3 overflow-visible" viewBox="0 0 360 100">
+        <path class="svg-handwriting-path" 
+              d="M25,65 C40,25 65,25 55,60 C50,75 75,35 90,55 C102,70 118,35 135,55 C150,70 175,20 195,55 C210,75 235,35 255,55 C275,70 305,30 335,50" 
+              fill="none" stroke="#fff0d0" stroke-width="2.2" stroke-linecap="round" opacity="0.35"/>
+        <text x="50%" y="58%" text-anchor="middle" fill="#fff0d0" class="font-calli text-4xl tracking-wider">
+          Wedding Invitation
+        </text>
+      </svg>
+      <p id="intro-typing-text" class="text-salon-cream font-serif text-base tracking-widest min-h-[28px]"></p>
+      <button onclick="dismissIntroOverlay()" class="mt-8 px-4 py-1.5 rounded-full border border-salon-cream/40 text-salon-cream/80 text-xs font-ui hover:bg-white/10 transition">
+        청첩장 바로 열기 ✕
+      </button>
+    </div>
+
+    <!-- 상단 플로팅 음악(BGM) & 모션 리플레이 버튼 (샘플의 music_btn_box) -->
+    <div class="sticky top-3 z-30 flex justify-between items-center px-4 pointer-events-none">
+      <button onclick="replayAllWritingMotions()" 
+              class="pointer-events-auto bg-white/85 backdrop-blur-md border border-salon-line px-3 py-1.5 rounded-full shadow-sm text-[11px] font-ui text-salon-point font-medium flex items-center gap-1 active:scale-95 transition">
+        <span>✍️ 손글씨 모션</span>
+      </button>
+
+      <button id="bgm-toggle-btn" onclick="toggleBGM()" 
+              class="pointer-events-auto w-9 h-9 rounded-full bg-white/85 backdrop-blur-md border border-salon-line shadow-sm flex items-center justify-center text-salon-dark active:scale-95 transition"
+              title="배경음악 켜기/끄기">
+        <!-- 음소거 상태 아이콘 -->
+        <svg id="icon-bgm-off" class="w-4 h-4 text-salon-sub" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
+        </svg>
+        <!-- 재생 중 아이콘 -->
+        <svg id="icon-bgm-on" class="w-4 h-4 text-salon-point hidden animate-spin" style="animation-duration: 5s;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- =====================================================
+         SECTION 1: 메인 표지 (살롱드레터 section1 type_i 재현)
+         ===================================================== -->
+    <section class="relative w-full h-[760px] sm:h-[810px] -mt-12 overflow-hidden flex flex-col justify-between text-white select-none">
+      <!-- 배경 웨딩 화보 이미지 -->
+      <div class="absolute inset-0">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85" 
+             alt="김도연 ♥ 이지유 메인 웨딩 화보"
+             onerror="this.src='https://placehold.co/800x1200/304a2e/fff0d0?text=Doyeon+%26+Jiyoo'"
+             class="w-full h-full object-cover object-center scale-105 transition-transform duration-1000">
+        <!-- 상하단 그라데이션 딤 처리 -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/15 to-black/70"></div>
+      </div>
+
+      <!-- 상단 신랑 & 신부 이름 (한글 + 영문) -->
+      <div class="relative z-10 pt-20 px-7">
+        <div class="flex justify-between items-start border-b border-white/25 pb-5">
+          <div class="text-left">
+            <div class="text-2xl tracking-[0.2em] font-bold drop-shadow">김도연</div>
+            <div class="text-xs tracking-[0.15em] text-salon-cream/90 font-serif mt-0.5">Doyeon</div>
+          </div>
+          <!-- 중앙 필기체 레터링 -->
+          <div class="text-center pt-1">
+            <span class="font-calli text-2xl text-salon-cream drop-shadow">Our Beginning</span>
+          </div>
+          <div class="text-right">
+            <div class="text-2xl tracking-[0.2em] font-bold drop-shadow">이지유</div>
+            <div class="text-xs tracking-[0.15em] text-salon-cream/90 font-serif mt-0.5">Jiyoo</div>
+          </div>
+        </div>
+
+        <!-- 표지 중앙 글씨 쓰는 모션(Typewriter) 문구 -->
+        <div class="mt-8 text-center">
+          <div class="inline-block px-3 py-0.5 rounded-full bg-white/15 backdrop-blur-xs text-[11px] tracking-[0.25em] text-salon-cream mb-3">
+            WEDDING INVITATION
+          </div>
+          <h1 class="text-xl sm:text-2xl font-normal leading-relaxed tracking-wide drop-shadow-md min-h-[68px]">
+            <span id="cover-typewriter"></span><span class="Typewriter__cursor light">|</span>
+          </h1>
+        </div>
+      </div>
+
+      <!-- 하단 예식 일시 및 장소 + 스크롤 가이드 -->
+      <div class="relative z-10 pb-8 px-7 text-center">
+        <div class="mb-6 space-y-1.5">
+          <div class="text-lg tracking-[0.18em] font-semibold text-salon-cream drop-shadow">
+            <span>2027.04.10</span>
+            <span class="mx-1.5 opacity-60">|</span>
+            <span>오후 5시 20분</span>
+          </div>
+          <div class="text-sm tracking-[0.12em] text-white/95">
+            <span>더살롱드웨딩홀</span>
+            <span class="font-semibold ml-1">1층 레터홀</span>
+          </div>
+        </div>
+
+        <!-- 스크롤 유도 모션 -->
+        <div class="scroll-indicator flex flex-col items-center gap-1 text-[11px] tracking-widest text-white/75">
+          <div class="w-4 h-7 rounded-full border border-white/60 flex justify-center pt-1">
+            <span class="w-1 h-1.5 rounded-full bg-white"></span>
+          </div>
+          <span>스크롤</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SECTION 12: 초대의 글 (글씨 쓰는 타이핑 모션 + 미니 일러스트)
+         ===================================================== -->
+    <section id="section-greeting" class="px-7 py-16 text-center bg-salon-bg border-b border-salon-line">
+      <div class="reveal">
+        <!-- 요청하신 간단한 포인트 이미지/일러스트 공간 -->
+        <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-salon-ivory border border-salon-line flex items-center justify-center overflow-hidden shadow-xs">
+          <svg class="w-9 h-9 text-salon-point" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M32 54V26" stroke-linecap="round"/>
+            <path d="M32 42C24 42 19 34 19 34C19 34 27 32 32 42Z" fill="#E4ECE3" stroke-linejoin="round"/>
+            <path d="M32 36C40 36 45 28 45 28C45 28 37 26 32 36Z" fill="#E4ECE3" stroke-linejoin="round"/>
+            <circle cx="32" cy="19" r="7" fill="#FAF8F5"/>
+            <circle cx="32" cy="19" r="2.5" fill="#b87272" stroke="none"/>
+          </svg>
+        </div>
+
+        <!-- 타이핑 모션이 작동하는 제목 -->
+        <h4 class="text-lg font-bold text-salon-point tracking-wider mb-6 min-h-[28px]">
+          <span id="greeting-title-typewriter">소중한 분들을 초대합니다.</span><span id="greeting-cursor" class="Typewriter__cursor">|</span>
+        </h4>
+
+        <!-- 초대의 글 본문 (샘플과 동일한 문구) -->
+        <div class="text-[15px] leading-[2.2] text-salon-text tracking-tight">
+          두 사람이 만나<br>
+          미래를 함께하고자 합니다.<br>
+          서로 모르고 살아온 어제보다<br>
+          함께 할 내일이 많다는 사실에<br>
+          감사합니다.<br><br>
+          부부라는 이름으로<br>
+          새로이 시작하는 오늘,<br>
+          가까이에서 축복해 주시면<br>
+          감사하겠습니다.
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SECTION 3: 신랑 & 신부 프로필 및 혼주 소개 (section3_tel)
+         ===================================================== -->
+    <section class="px-6 py-16 text-center bg-salon-ivory border-b border-salon-line">
+      <div class="reveal">
+        <p class="text-[11px] tracking-[0.25em] text-salon-point uppercase mb-1 font-ui">Our Couple</p>
+        <h2 class="text-lg font-bold text-salon-dark mb-8">신랑 & 신부 소개</h2>
+
+        <!-- 신랑 / 신부 2단 프로필 카드 -->
+        <div class="grid grid-cols-2 gap-4">
+          <!-- 신랑 김도연 -->
+          <div class="bg-white rounded-2xl p-4 border border-salon-line shadow-xs flex flex-col items-center">
+            <div class="w-full aspect-[4/5] rounded-xl overflow-hidden mb-3.5 bg-salon-paper">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" 
+                   alt="신랑 김도연"
+                   onerror="this.src='https://placehold.co/400x500/576645/ffffff?text=Groom'"
+                   class="w-full h-full object-cover object-top hover:scale-105 transition duration-500">
+            </div>
+            <div class="flex items-center gap-1.5 mb-3">
+              <span class="text-xs font-bold text-salon-groom font-ui">신랑</span>
+              <span class="text-base font-bold text-salon-dark">김도연</span>
+              <a href="tel:010-1111-1111" class="w-6 h-6 rounded-full bg-salon-groom/15 text-salon-groom flex items-center justify-center ml-0.5 hover:bg-salon-groom hover:text-white transition" title="신랑에게 전화걸기">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+              </a>
+            </div>
+            <div class="text-xs text-salon-sub leading-relaxed space-y-1 mb-4">
+              <p class="font-ui text-[11px] text-salon-groom font-medium">93년 8월 3일</p>
+              <p class="pt-1"><span class="highlighter-span text-salon-dark">유머러스함</span></p>
+              <p><span class="highlighter-span text-salon-dark">운동 러버</span></p>
+              <p class="pt-1.5 text-salon-text">나무같은 남편이<br>되겠습니다</p>
+            </div>
+            <div class="mt-auto pt-3 border-t border-salon-line w-full text-xs text-salon-text">
+              <span class="font-semibold">김종혁 · 최은혜</span>
+              <span class="text-[11px] text-salon-sub ml-0.5">의 장남</span>
+            </div>
+          </div>
+
+          <!-- 신부 이지유 -->
+          <div class="bg-white rounded-2xl p-4 border border-salon-line shadow-xs flex flex-col items-center">
+            <div class="w-full aspect-[4/5] rounded-xl overflow-hidden mb-3.5 bg-salon-paper">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" 
+                   alt="신부 이지유"
+                   onerror="this.src='https://placehold.co/400x500/b87272/ffffff?text=Bride'"
+                   class="w-full h-full object-cover object-top hover:scale-105 transition duration-500">
+            </div>
+            <div class="flex items-center gap-1.5 mb-3">
+              <span class="text-xs font-bold text-salon-bride font-ui">신부</span>
+              <span class="text-base font-bold text-salon-dark">이지유</span>
+              <a href="tel:010-2222-2222" class="w-6 h-6 rounded-full bg-salon-bride/15 text-salon-bride flex items-center justify-center ml-0.5 hover:bg-salon-bride hover:text-white transition" title="신부에게 전화걸기">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+              </a>
+            </div>
+            <div class="text-xs text-salon-sub leading-relaxed space-y-1 mb-4">
+              <p class="font-ui text-[11px] text-salon-bride font-medium">95년 8월 3일</p>
+              <p class="pt-1"><span class="highlighter-span text-salon-dark">웃음이 많음</span></p>
+              <p><span class="highlighter-span text-salon-dark">빵 러버</span></p>
+              <p class="pt-1.5 text-salon-text">햇살같은 아내가<br>되겠습니다</p>
+            </div>
+            <div class="mt-auto pt-3 border-t border-salon-line w-full text-xs text-salon-text">
+              <span class="font-semibold">이주영 · 강지은</span>
+              <span class="text-[11px] text-salon-sub ml-0.5">의 장녀</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SECTION LETTER: 엄마의 조각 손편지 & 실시간 글씨 쓰는 모션
+         (샘플의 #section_letter / greeting_cut_paper 완벽 재현)
+         ===================================================== -->
+    <section id="section_letter" class="relative px-6 py-16 bg-[#F4F0E6] border-b border-salon-line overflow-hidden">
+      <div class="reveal">
+        <div class="flex justify-between items-center mb-4">
+          <div class="text-left">
+            <p class="text-[11px] tracking-[0.2em] text-salon-point uppercase font-ui">Mother's Letter</p>
+            <h2 class="text-lg font-bold text-salon-dark">사랑하는 딸에게 쓰는 편지</h2>
+          </div>
+          <button onclick="startLetterWritingMotion()" 
+                  class="px-3 py-1.5 rounded-full bg-white border border-salon-line text-xs font-ui text-salon-point font-semibold shadow-2xs hover:bg-salon-highlight active:scale-95 transition flex items-center gap-1">
+            <span>✍️ 편지 다시 쓰기</span>
+          </button>
+        </div>
+
+        <!-- 사진 + 오려 붙인 종이 조각(soft_paper) 레이아웃 -->
+        <div class="relative mx-auto max-w-[360px]">
+          <figure class="rounded-2xl overflow-hidden shadow-lg border-4 border-white aspect-[3/4] bg-salon-paper">
+            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=80" 
+                 alt="첫 번째 손편지 사진"
+                 onerror="this.src='https://placehold.co/600x800/EAE6DF/304a2e?text=Letter+Photo'"
+                 class="w-full h-full object-cover brightness-95">
+          </figure>
+
+          <!-- 사진 위에 겹쳐지는 조각 손편지 영역 (한 글자씩 써지는 모션) -->
+          <div class="relative -mt-56 sm:-mt-60 ml-3 mr-2 z-10 text-left pb-2">
+            <!-- 첫 줄: 사랑하는 딸, 지유야! -->
+            <div class="mb-2.5">
+              <span class="letter_text_line font-gaegu text-xl sm:text-[22px] font-bold tracking-wide">
+                <span id="letter-line-0"></span><span id="letter-cursor-0" class="Typewriter__cursor hidden">|</span>
+              </span>
+            </div>
+
+            <!-- 본문 8줄 조각 종이 -->
+            <div class="space-y-1">
+              <div><span class="letter_text_line font-gaegu text-[17px] sm:text-[18px] font-bold"><span id="letter-line-1"></span><span id="letter-cursor-1" class="Typewriter__cursor hidden">|</span></span></div>
+              <div><span class="letter_text_line font-gaegu text-[17px] sm:text-[18px] font-bold"><span id="letter-line-2"></span><span id="letter-cursor-2" class="Typewriter__cursor hidden">|</span></span></div>
+              <div><span class="letter_text_line font-gaegu text-[17px] sm:text-[18px] font-bold"><span id="letter-line-3"></span><span id="letter-cursor-3" class="Typewriter__cursor hidden">|</span></span></div>
+              <div><span class="letter_text_line font-gaegu text-[17px] sm:text-[18px] font-bold"><span id="letter-line-4"></span><span id="letter-cursor-4" class="Typewriter__cursor hidden">|</span></span></div>
+              <div><span class="letter_text_line font-gaegu text-[17px] sm:text-[18px] font-bold"><span id="letter-line-5"></span><span id="letter-cursor-5" class="Typewriter__cursor hidden">|</span></span></div>
+              <div><span class="letter_text_line font-gaegu text-[17px] sm:text-[18px] font-bold"><span id="letter-line-6"></span><span id="letter-cursor-6" class="Typewriter__cursor hidden">|</span></span></div>
+              <div><span class="letter_text_line font-gaegu text-[17px] sm:text-[18px] font-bold"><span id="letter-line-7"></span><span id="letter-cursor-7" class="Typewriter__cursor hidden">|</span></span></div>
+              <div><span class="letter_text_line font-gaegu text-[17px] sm:text-[18px] font-bold"><span id="letter-line-8"></span><span id="letter-cursor-8" class="Typewriter__cursor hidden">|</span></span></div>
+            </div>
+
+            <!-- 마지막 줄: 엄마가 -->
+            <div class="mt-3 text-right pr-4">
+              <span class="letter_text_line font-gaegu text-xl font-bold text-salon-point">
+                <span id="letter-line-9"></span><span id="letter-cursor-9" class="Typewriter__cursor hidden">|</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SECTION 4 & 13: 예식 안내 달력 & 함께한 시간 카운터
+         ===================================================== -->
+    <section class="px-6 py-16 text-center bg-salon-bg border-b border-salon-line">
+      <div class="reveal">
+        <div class="mb-6">
+          <p class="text-xs tracking-[0.2em] text-salon-point font-bold mb-1">예식 안내</p>
+          <h3 class="text-base font-bold text-salon-dark">2027년 4월 10일 토요일 오후 5시 20분</h3>
+          <p class="text-xs text-salon-sub mt-1">더살롱드웨딩홀 1층 레터홀</p>
+        </div>
+
+        <!-- 달력 상단 와이드 감성 사진 -->
+        <div class="rounded-2xl overflow-hidden aspect-[16/10] mb-6 shadow-xs border border-salon-line">
+          <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80" 
+               alt="예식 달력 화보"
+               onerror="this.src='https://placehold.co/600x380/304a2e/ffffff?text=2027.04.10'"
+               class="w-full h-full object-cover">
+        </div>
+
+        <!-- 2027년 4월 달력 테이블 (2027년 4월 1일은 목요일) -->
+        <div class="bg-salon-ivory rounded-2xl p-5 border border-salon-line mb-6">
+          <div class="text-lg font-bold text-salon-point mb-4 tracking-widest">4월</div>
+          <div class="grid grid-cols-7 gap-y-2 text-xs font-semibold border-b border-salon-line pb-2 mb-2">
+            <span class="text-salon-bride">일</span>
+            <span>월</span><span>화</span><span>수</span><span>목</span><span>금</span>
+            <span class="text-salon-point">토</span>
+          </div>
+          <div class="grid grid-cols-7 gap-y-3 text-xs items-center">
+            <span></span><span></span><span></span><span></span>
+            <span>1</span><span>2</span><span>3</span>
+            <span class="text-salon-bride">4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+            <!-- 10일 오후 5:20 하이라이트 -->
+            <div class="flex flex-col items-center justify-center -my-1">
+              <span class="w-7 h-7 rounded-full bg-salon-point text-white font-bold flex items-center justify-center shadow-sm">10</span>
+              <em class="not-italic text-[9px] text-salon-point font-bold mt-0.5 whitespace-nowrap">오후5:20</em>
+            </div>
+            <span class="text-salon-bride">11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span>
+            <span class="text-salon-bride">18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span>
+            <span class="text-salon-bride">25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span>
+          </div>
+        </div>
+
+        <!-- D-Day 카운트다운 박스 -->
+        <div class="bg-white rounded-2xl p-4 border border-salon-line shadow-2xs mb-4">
+          <p class="text-xs text-salon-sub mb-2">도연 <span class="text-salon-bride">♥</span> 지유의 결혼식까지</p>
+          <div id="dday-countdown-text" class="text-base font-bold text-salon-point font-ui">
+            계산 중...
+          </div>
+        </div>
+
+        <!-- 샘플 SECTION 13: 함께한 시간 실시간 카운터 (firstdate="2012-07-11") -->
+        <div class="bg-salon-point text-white rounded-2xl p-4 shadow-sm">
+          <span class="block text-[11px] text-salon-cream/80 tracking-widest uppercase mb-1">함께한 시간 (Since 2012.07.11)</span>
+          <span id="together-timer-text" class="text-sm sm:text-base font-bold tracking-wide text-salon-cream">
+            "14년 3개월 26일 19시간 8분 15초"
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SECTION 18: 우리의 이야기 타임라인 (형광펜 하이라이트 효과)
+         ===================================================== -->
+    <section class="px-6 py-16 bg-salon-ivory border-b border-salon-line">
+      <div class="reveal">
+        <p class="text-[11px] tracking-[0.25em] text-salon-point uppercase text-center mb-1 font-ui">Our Story</p>
+        <h2 class="text-lg font-bold text-salon-dark text-center mb-10">우리의 이야기</h2>
+
+        <div class="relative space-y-8 before:content-[''] before:absolute before:left-1/2 before:-translate-x-1/2 before:top-4 before:bottom-4 before:w-[1px] before:bg-salon-point/30">
+          <!-- 1. 첫 만남 -->
+          <div class="relative grid grid-cols-2 gap-5 items-center">
+            <div class="rounded-2xl overflow-hidden shadow-sm border-2 border-white aspect-square bg-white">
+              <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80" alt="첫 만남" class="w-full h-full object-cover">
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-salon-line text-center shadow-2xs">
+              <div class="text-xs font-bold text-salon-point mb-1.5">첫 만남</div>
+              <div class="text-xs leading-relaxed text-salon-text">
+                <p>저희는 스페인에서</p>
+                <p><span class="highlighter-span font-bold">처음</span> 만났어요.</p>
+              </div>
+            </div>
+            <span class="absolute left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-salon-point border-2 border-white shadow"></span>
+          </div>
+
+          <!-- 2. 1주년 (Reverse) -->
+          <div class="relative grid grid-cols-2 gap-5 items-center">
+            <div class="bg-white p-4 rounded-2xl border border-salon-line text-center shadow-2xs">
+              <div class="text-xs font-bold text-salon-point mb-1.5">1주년</div>
+              <div class="text-xs leading-relaxed text-salon-text">
+                <p><span class="highlighter-span font-bold">함께한 1년</span></p>
+                <p>서로를 알아가는 시간</p>
+                <p>이었어요.</p>
+              </div>
+            </div>
+            <div class="rounded-2xl overflow-hidden shadow-sm border-2 border-white aspect-square bg-white">
+              <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=500&q=80" alt="1주년" class="w-full h-full object-cover">
+            </div>
+            <span class="absolute left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-salon-point border-2 border-white shadow"></span>
+          </div>
+
+          <!-- 3. 2주년 -->
+          <div class="relative grid grid-cols-2 gap-5 items-center">
+            <div class="rounded-2xl overflow-hidden shadow-sm border-2 border-white aspect-square bg-white">
+              <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=500&q=80" alt="2주년" class="w-full h-full object-cover">
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-salon-line text-center shadow-2xs">
+              <div class="text-xs font-bold text-salon-point mb-1.5">2주년</div>
+              <div class="text-xs leading-relaxed text-salon-text">
+                <p><span class="highlighter-span font-bold">함께한 2년</span></p>
+                <p>우리는 결혼을 결심했어요.</p>
+              </div>
+            </div>
+            <span class="absolute left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-salon-point border-2 border-white shadow"></span>
+          </div>
+
+          <!-- 4. WeddingDay (Reverse) -->
+          <div class="relative grid grid-cols-2 gap-5 items-center">
+            <div class="bg-white p-4 rounded-2xl border border-salon-line text-center shadow-2xs">
+              <div class="text-xs font-bold text-salon-bride mb-1.5">WeddingDay</div>
+              <div class="text-xs leading-relaxed text-salon-text">
+                <p>저희는 이날 <span class="highlighter-span font-bold">결혼</span>해요.</p>
+                <p>저희의 시작을</p>
+                <p>축하해주세요.</p>
+              </div>
+            </div>
+            <div class="rounded-2xl overflow-hidden shadow-sm border-2 border-white aspect-square bg-white">
+              <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=500&q=80" alt="WeddingDay" class="w-full h-full object-cover">
+            </div>
+            <span class="absolute left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-salon-bride border-2 border-white shadow"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SECTION 5: 웨딩 갤러리 (10장 - 그리드 뷰 & 가로 스와이프 뷰 전환)
+         ===================================================== -->
+    <section class="px-6 py-16 text-center bg-salon-bg border-b border-salon-line">
+      <div class="reveal">
+        <p class="text-[11px] tracking-[0.25em] text-salon-point uppercase mb-1 font-ui">Gallery</p>
+        <h2 class="text-lg font-bold text-salon-dark mb-4">갤러리</h2>
+
+        <!-- 보기 방식 토글 (바둑판 그리드 vs 옆으로 넘겨보기) -->
+        <div class="inline-flex rounded-full bg-salon-ivory p-1 border border-salon-line mb-5 font-ui text-xs">
+          <button id="btn-gal-grid" onclick="switchGalleryMode('grid')" class="px-3.5 py-1 rounded-full bg-salon-point text-white font-medium transition">
+            바둑판 보기 (10장)
+          </button>
+          <button id="btn-gal-scroll" onclick="switchGalleryMode('scroll')" class="px-3.5 py-1 rounded-full text-salon-sub font-medium transition">
+            옆으로 넘겨보기 ➔
+          </button>
+        </div>
+
+        <!-- 1) 바둑판 그리드 뷰 (9장 이상 - 총 10장) -->
+        <div id="gallery-grid-view" class="grid grid-cols-3 gap-2">
+          <!-- JS에서 10장 렌더링 -->
+        </div>
+
+        <!-- 2) 옆으로 넘겨보는 가로 스크롤 뷰 (샘플의 gallery_mixed 재현) -->
+        <div id="gallery-scroll-view" class="hidden">
+          <div class="flex items-center justify-end gap-1 text-xs text-salon-sub mb-2">
+            <span>옆으로 넘겨보세요</span>
+            <span>❯❯</span>
+          </div>
+          <div id="gallery-horizontal-box" class="flex gap-3 overflow-x-auto no-scrollbar pb-2 snap-x snap-mandatory">
+            <!-- JS에서 10장 렌더링 -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SECTION 19 & 17: 게스트스냅 안내 & 공지사항 3탭 (포토부스/주차/답례품)
+         ===================================================== -->
+    <section class="px-6 py-16 text-center bg-salon-ivory border-b border-salon-line space-y-12">
+      <!-- 게스트 스냅 카드 -->
+      <div class="reveal bg-white rounded-3xl p-6 border border-salon-line shadow-xs">
+        <h2 class="text-lg font-bold text-salon-dark mb-1">게스트스냅 📷</h2>
+        <p class="text-xs text-salon-sub mb-4">저희의 스냅 작가님이 되어주세요🧡</p>
+        <div class="rounded-2xl overflow-hidden aspect-[16/10] mb-4 bg-salon-paper">
+          <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=700&q=80" alt="게스트 스냅" class="w-full h-full object-cover">
+        </div>
+        <div class="text-xs text-salon-text leading-relaxed space-y-1 bg-salon-ivory p-4 rounded-2xl mb-4">
+          <p class="font-bold text-salon-point mb-1">[이런 순간들을 담아주세요!]</p>
+          <p>1. 행복한 신랑&신부 사진 · 2. 신랑&신부 행진</p>
+          <p>3. 가족&친구들과 함께한 순간 · 4. 여러분들의 사진</p>
+          <p class="pt-1 text-salon-bride font-semibold">🎁 가장 멋진 컷을 남겨주신 분께 선물을 드립니다!</p>
+        </div>
+        <button onclick="showToast('2027년 4월 10일 예식 당일부터 사진 업로드가 오픈됩니다! 📸')" 
+                class="w-full py-3 rounded-xl bg-salon-point text-white text-xs font-ui font-semibold hover:opacity-95 active:scale-98 transition">
+          사진 및 영상 업로드 (4월 10일 OPEN)
+        </button>
+      </div>
+
+      <!-- 공지사항 탭 (포토부스 / 주차안내 / 답례품) -->
+      <div class="reveal">
+        <p class="text-[11px] tracking-[0.25em] text-salon-point uppercase mb-1 font-ui">Wedding Notice</p>
+        <h2 class="text-lg font-bold text-salon-dark mb-4">예식 안내사항</h2>
+
+        <div class="bg-white rounded-3xl p-5 border border-salon-line shadow-xs">
+          <!-- 탭 헤더 -->
+          <div class="grid grid-cols-3 gap-1 bg-salon-ivory p-1 rounded-xl mb-4 font-ui text-xs">
+            <button onclick="switchNoticeTab(0)" id="notice-tab-0" class="py-2 rounded-lg bg-salon-point text-white font-semibold transition">포토부스</button>
+            <button onclick="switchNoticeTab(1)" id="notice-tab-1" class="py-2 rounded-lg text-salon-sub font-medium transition">주차안내</button>
+            <button onclick="switchNoticeTab(2)" id="notice-tab-2" class="py-2 rounded-lg text-salon-sub font-medium transition">답례품</button>
+          </div>
+
+          <!-- 탭 0: 포토부스 -->
+          <div id="notice-panel-0" class="space-y-3">
+            <div class="rounded-xl overflow-hidden aspect-[16/9]">
+              <img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=700&q=80" alt="포토부스" class="w-full h-full object-cover">
+            </div>
+            <div class="text-xs leading-relaxed text-salon-text py-2">
+              <p>소중한 날을 기록할 수 있도록 포토부스를 준비했습니다.</p>
+              <p>신랑, 신부와 함께 사진을 찍어주세요.</p>
+              <p class="mt-1"><span class="highlighter-span font-bold">한 장은 방명록</span>에, <span class="highlighter-span font-bold">한 장은 추억</span>으로 간직해주세요.</p>
+            </div>
+          </div>
+
+          <!-- 탭 1: 주차안내 -->
+          <div id="notice-panel-1" class="hidden space-y-3">
+            <div class="rounded-xl overflow-hidden aspect-[16/9]">
+              <img src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=700&q=80" alt="주차안내" class="w-full h-full object-cover">
+            </div>
+            <div class="text-xs leading-relaxed text-salon-text py-2">
+              <p>예식장 내부 주차장이 협소할 수 있습니다.</p>
+              <p>주차안내 요원의 안내를 받아 전용 야외주차장에 주차하시고</p>
+              <p>셔틀버스를 이용해 주시면 감사하겠습니다.</p>
+              <p class="mt-1.5"><span class="highlighter-span font-bold">🚌 셔틀버스 운행간격: 5분</span></p>
+            </div>
+          </div>
+
+          <!-- 탭 2: 답례품 -->
+          <div id="notice-panel-2" class="hidden space-y-3">
+            <div class="rounded-xl overflow-hidden aspect-[16/9]">
+              <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=700&q=80" alt="답례품 꽃다발" class="w-full h-full object-cover">
+            </div>
+            <div class="text-xs leading-relaxed text-salon-text py-2">
+              <p>계절에 맞는 생화로 꽃다발을 만들어</p>
+              <p>예식 후 하객분들께 감사의 마음을 담아</p>
+              <p>답례품으로 나누어 드릴 예정이니,</p>
+              <p class="mt-1"><span class="highlighter-span font-bold">저희가 준비한 자연을 품어가세요.</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SECTION 6: 오시는 길 (식장 주소, 약도, 내비게이션, 교통편)
+         ===================================================== -->
+    <section class="px-6 py-16 text-center bg-salon-bg border-b border-salon-line">
+      <div class="reveal">
+        <p class="text-[11px] tracking-[0.25em] text-salon-point uppercase mb-1 font-ui">Location</p>
+        <h2 class="text-lg font-bold text-salon-dark mb-5">오시는 길</h2>
+
+        <!-- 웨딩홀 이름 및 주소 카드 -->
+        <div class="bg-salon-ivory rounded-2xl p-5 border border-salon-line mb-4 text-left flex justify-between items-center gap-2">
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="text-base font-bold text-salon-dark">더살롱드웨딩홀</span>
+              <span class="text-xs text-salon-point font-semibold">1층 레터홀</span>
+            </div>
+            <p id="hall-addr-text" class="text-xs text-salon-sub mt-1">제주특별자치도 서귀포시 중앙로 105</p>
+          </div>
+          <div class="flex gap-1.5 shrink-0 font-ui">
+            <button onclick="copyText('제주특별자치도 서귀포시 중앙로 105', '식장 주소가 복사되었습니다.')" 
+                    class="px-3 py-2 rounded-xl bg-white border border-salon-line text-xs font-semibold text-salon-dark shadow-2xs active:scale-95">
+              복사
+            </button>
+            <a href="tel:02-1111-2222" class="px-3 py-2 rounded-xl bg-salon-point text-white text-xs font-semibold shadow-2xs flex items-center">
+              📞
+            </a>
+          </div>
+        </div>
+
+        <!-- 일러스트 지도 프리뷰 -->
+        <div class="relative w-full h-52 rounded-2xl overflow-hidden border border-salon-line mb-3 bg-[#ECE9E0]">
+          <svg class="w-full h-full object-cover" viewBox="0 0 400 210" fill="none">
+            <rect width="400" height="210" fill="#F2EFE9"/>
+            <path d="M0 65 H400" stroke="#E2DDD3" stroke-width="14"/>
+            <path d="M0 155 H400" stroke="#E2DDD3" stroke-width="16"/>
+            <path d="M120 0 V210" stroke="#E2DDD3" stroke-width="15"/>
+            <path d="M260 0 V210" stroke="#FFFFFF" stroke-width="22"/>
+            <path d="M0 110 H400" stroke="#FFFFFF" stroke-width="20"/>
+            <!-- 마커 -->
+            <g transform="translate(235, 45)">
+              <ellipse cx="25" cy="52" rx="12" ry="4" fill="rgba(0,0,0,0.18)"/>
+              <path d="M25 6C15.6 6 8 13.6 8 23C8 35.2 25 50 25 50C25 50 42 35.2 42 23C42 13.6 34.4 6 25 6Z" fill="#304a2e"/>
+              <circle cx="25" cy="22" r="7" fill="#fff0d0"/>
+            </g>
+            <rect x="185" y="16" width="150" height="24" rx="12" fill="#262626"/>
+            <text x="260" y="32" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="bold" font-family="sans-serif">더살롱드웨딩홀 1층</text>
+          </svg>
+        </div>
+
+        <!-- 티맵 / 카카오내비 / 네이버지도 버튼 -->
+        <div class="grid grid-cols-3 gap-2 mb-6 font-ui text-xs">
+          <a href="https://www.tmap.co.kr" target="_blank" rel="noopener" class="py-2.5 px-2 bg-white rounded-xl border border-salon-line font-medium flex items-center justify-center gap-1.5 shadow-2xs hover:bg-salon-ivory">
+            <span class="w-4 h-4 rounded bg-[#E6007E] text-white text-[10px] font-bold flex items-center justify-center">T</span>
+            <span>티맵</span>
+          </a>
+          <a href="https://map.kakao.com/link/search/서귀포시 중앙로 105" target="_blank" rel="noopener" class="py-2.5 px-2 bg-white rounded-xl border border-salon-line font-medium flex items-center justify-center gap-1.5 shadow-2xs hover:bg-salon-ivory">
+            <span class="w-4 h-4 rounded bg-[#FEE500] text-black text-[10px] font-bold flex items-center justify-center">K</span>
+            <span>카카오내비</span>
+          </a>
+          <a href="https://map.naver.com/p/search/서귀포시 중앙로 105" target="_blank" rel="noopener" class="py-2.5 px-2 bg-white rounded-xl border border-salon-line font-medium flex items-center justify-center gap-1.5 shadow-2xs hover:bg-salon-ivory">
+            <span class="w-4 h-4 rounded bg-[#03C75A] text-white text-[10px] font-bold flex items-center justify-center">N</span>
+            <span>네이버지도</span>
+          </a>
+        </div>
+
+        <!-- 대중교통 안내 -->
+        <div class="text-left bg-salon-ivory rounded-2xl p-5 border border-salon-line space-y-3.5 text-xs leading-relaxed">
+          <div>
+            <div class="font-bold text-salon-point mb-0.5">🚌 버스</div>
+            <p class="text-salon-sub">100번, 200번, 510번 — 살롱드레터 정류소 하차 후 도보 3분</p>
+          </div>
+          <div class="border-t border-salon-line pt-3">
+            <div class="font-bold text-salon-point mb-0.5">🚇 지하철 / 셔틀</div>
+            <p class="text-salon-sub">1호선 살롱드레터역 1번 출구 / 2호선 2번 출구 하차 후 우측 신호등 건너 셔틀버스 탑승 또는 도보 5분</p>
+          </div>
+          <div class="border-t border-salon-line pt-3">
+            <div class="font-bold text-salon-point mb-0.5">🚗 자차</div>
+            <p class="text-salon-sub">내비게이션에 '살롱드레터 주차장' 또는 '더살롱드웨딩홀' 검색</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SECTION 8: 참석 여부 전달 (RSVP 섹션)
+         ===================================================== -->
+    <section class="px-6 py-16 text-center bg-salon-ivory border-b border-salon-line">
+      <div class="reveal">
+        <p class="text-[11px] tracking-[0.25em] text-salon-point uppercase mb-1 font-ui">R.S.V.P</p>
+        <h2 class="text-lg font-bold text-salon-dark mb-4">참석 여부 전달</h2>
+        <p class="text-xs text-salon-sub leading-[2.0] mb-6">
+          소중한 시간을 내어 결혼식에<br>
+          참석해주시는 모든 분들께 감사드립니다.<br>
+          예식이 지정좌석제로 진행되오니,<br>
+          참석 여부를 회신해 주시면 더욱 감사하겠습니다.
+        </p>
+        <button onclick="openRsvpModal()" 
+                class="w-full max-w-[260px] py-3.5 px-6 rounded-full bg-salon-point text-white text-xs font-ui font-semibold shadow-md hover:opacity-95 active:scale-95 transition">
+          참석 여부 전달하기
+        </button>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SECTION 9: 마음 전하실 곳 (신랑측 / 신부측 계좌번호 + 복사)
+         ===================================================== -->
+    <section class="px-6 py-16 text-center bg-salon-bg border-b border-salon-line">
+      <div class="reveal">
+        <div class="w-10 h-10 mx-auto mb-2 rounded-full bg-salon-ivory border border-salon-line flex items-center justify-center text-salon-point">
+          🌿
+        </div>
+        <h2 class="text-lg font-bold text-salon-dark mb-2">마음 전하실 곳</h2>
+        <p class="text-xs text-salon-sub mb-7 leading-relaxed">
+          참석이 어려우신 분들을 위해<br>축하의 마음을 전하실 곳을 안내드립니다.
+        </p>
+
+        <!-- 신랑측 계좌 아코디언 -->
+        <div class="mb-3 text-left">
+          <button onclick="toggleAccountAccordion('groom-bank-list', 'groom-bank-arrow')" 
+                  class="w-full px-5 py-4 rounded-2xl bg-[#EEF1EB] border border-salon-groom/30 flex justify-between items-center text-sm font-bold text-salon-groom">
+            <span>신랑측 계좌번호</span>
+            <span id="groom-bank-arrow" class="transition-transform duration-300 text-xs">▼</span>
+          </button>
+          <div id="groom-bank-list" class="acc-body bg-white border-x border-b border-salon-line rounded-b-2xl px-4">
+            <div class="py-3.5 border-b border-dashed border-salon-line flex justify-between items-center text-xs">
+              <div>
+                <span class="font-bold text-salon-groom mr-1">신랑</span> <strong>김도연</strong>
+                <p class="text-salon-sub font-ui mt-0.5">카카오뱅크 3333-01-1111-1111</p>
+              </div>
+              <button onclick="copyText('3333-01-1111-1111', '신랑 김도연 계좌번호가 복사되었습니다.')" class="px-3 py-1.5 rounded-lg bg-salon-ivory border border-salon-line font-ui font-semibold text-salon-dark">복사</button>
+            </div>
+            <div class="py-3.5 border-b border-dashed border-salon-line flex justify-between items-center text-xs">
+              <div>
+                <span class="font-bold text-salon-groom mr-1">신랑 아버지</span> <strong>김종혁</strong>
+                <p class="text-salon-sub font-ui mt-0.5">카카오뱅크 3333-02-1111-1111</p>
+              </div>
+              <button onclick="copyText('3333-02-1111-1111', '신랑 아버지 계좌번호가 복사되었습니다.')" class="px-3 py-1.5 rounded-lg bg-salon-ivory border border-salon-line font-ui font-semibold text-salon-dark">복사</button>
+            </div>
+            <div class="py-3.5 flex justify-between items-center text-xs">
+              <div>
+                <span class="font-bold text-salon-groom mr-1">신랑 어머니</span> <strong>최은혜</strong>
+                <p class="text-salon-sub font-ui mt-0.5">카카오뱅크 3333-03-1111-1111</p>
+              </div>
+              <button onclick="copyText('3333-03-1111-1111', '신랑 어머니 계좌번호가 복사되었습니다.')" class="px-3 py-1.5 rounded-lg bg-salon-ivory border border-salon-line font-ui font-semibold text-salon-dark">복사</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 신부측 계좌 아코디언 -->
+        <div class="text-left">
+          <button onclick="toggleAccountAccordion('bride-bank-list', 'bride-bank-arrow')" 
+                  class="w-full px-5 py-4 rounded-2xl bg-[#F8EFEF] border border-salon-bride/30 flex justify-between items-center text-sm font-bold text-salon-bride">
+            <span>신부측 계좌번호</span>
+            <span id="bride-bank-arrow" class="transition-transform duration-300 text-xs">▼</span>
+          </button>
+          <div id="bride-bank-list" class="acc-body bg-white border-x border-b border-salon-line rounded-b-2xl px-4">
+            <div class="py-3.5 border-b border-dashed border-salon-line flex justify-between items-center text-xs">
+              <div>
+                <span class="font-bold text-salon-bride mr-1">신부</span> <strong>이지유</strong>
+                <p class="text-salon-sub font-ui mt-0.5">카카오뱅크 3333-04-2222-2222</p>
+              </div>
+              <button onclick="copyText('3333-04-2222-2222', '신부 이지유 계좌번호가 복사되었습니다.')" class="px-3 py-1.5 rounded-lg bg-salon-ivory border border-salon-line font-ui font-semibold text-salon-dark">복사</button>
+            </div>
+            <div class="py-3.5 border-b border-dashed border-salon-line flex justify-between items-center text-xs">
+              <div>
+                <span class="font-bold text-salon-bride mr-1">신부 아버지</span> <strong>이주영</strong>
+                <p class="text-salon-sub font-ui mt-0.5">카카오뱅크 3333-05-2222-2222</p>
+              </div>
+              <button onclick="copyText('3333-05-2222-2222', '신부 아버지 계좌번호가 복사되었습니다.')" class="px-3 py-1.5 rounded-lg bg-salon-ivory border border-salon-line font-ui font-semibold text-salon-dark">복사</button>
+            </div>
+            <div class="py-3.5 flex justify-between items-center text-xs">
+              <div>
+                <span class="font-bold text-salon-bride mr-1">신부 어머니</span> <strong>강지은</strong>
+                <p class="text-salon-sub font-ui mt-0.5">카카오뱅크 3333-06-2222-2222</p>
+              </div>
+              <button onclick="copyText('3333-06-2222-2222', '신부 어머니 계좌번호가 복사되었습니다.')" class="px-3 py-1.5 rounded-lg bg-salon-ivory border border-salon-line font-ui font-semibold text-salon-dark">복사</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SECTION 11: 엔딩 화보 & 감사합니다 인사 & GitHub 주소 공간
+         ===================================================== -->
+    <section class="bg-salon-ivory">
+      <!-- 엔딩 풀블리드 이미지 & 손글씨 오버레이 (샘플의 section11 재현) -->
+      <div class="relative w-full aspect-[4/5] overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1544078751-58fee2d8a03b?auto=format&fit=crop&w=900&q=80" 
+             alt="엔딩 웨딩 사진"
+             class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center px-6 text-center">
+          <p class="font-gaegu text-2xl sm:text-3xl text-white font-bold drop-shadow-md">
+            저희 둘, 행복하게 잘 살겠습니다 :)
+          </p>
+        </div>
+      </div>
+
+      <!-- 마무리 감사 인사 & GitHub 링크 영역 -->
+      <div class="px-6 py-12 text-center">
+        <h3 class="text-xl font-bold text-salon-dark mb-2">감사합니다</h3>
+        <p class="text-xs text-salon-sub leading-[2.0] mb-6">
+          언제나 따뜻한 마음으로 지켜봐 주시고<br>
+          귀한 걸음으로 축복해 주시는 모든 분들께<br>
+          진심으로 감사드립니다.
+        </p>
+
+        <div class="flex justify-center gap-2 mb-8 font-ui text-xs">
+          <button onclick="copyText(window.location.href, '모바일 청첩장 링크가 복사되었습니다.')" 
+                  class="px-4 py-2.5 rounded-full bg-white border border-salon-line text-salon-dark font-medium shadow-2xs hover:bg-gray-50">
+            🔗 청첩장 링크 복사
+          </button>
+          <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+                  class="px-4 py-2.5 rounded-full bg-white border border-salon-line text-salon-dark font-medium shadow-2xs hover:bg-gray-50">
+            ↑ 맨 위로
+          </button>
+        </div>
+
+        <!-- 요청하신 GitHub 주소 넣을 공간 -->
+        <div class="pt-6 border-t border-salon-line flex flex-col items-center gap-2 font-ui">
+          <span class="text-[11px] text-salon-sub">Built with ♥ for Doyeon & Jiyoo</span>
+          <a id="github-repo-link" href="https://github.com/your-username/wedding-invitation" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#24292f] text-white text-xs font-medium hover:opacity-90 transition shadow-xs">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            <span id="github-repo-label">github.com/your-username/wedding-invitation</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =====================================================
+       초기 미니 팝업 (샘플의 #p_rsvp 참석여부 안내 미니 팝업)
+       ===================================================== -->
+  <div id="mini-rsvp-popup" class="fixed inset-0 z-40 bg-black/50 hidden items-end sm:items-center justify-center p-4">
+    <div class="bg-white w-full max-w-[370px] rounded-3xl p-6 shadow-2xl border border-salon-line relative text-center">
+      <button onclick="closeMiniRsvpPopup()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-salon-ivory text-salon-sub text-xs flex items-center justify-center">✕</button>
+      <h3 class="text-lg font-bold text-salon-dark mb-2">참석 여부 전달</h3>
+      <p class="text-xs text-salon-sub leading-relaxed mb-4">
+        소중한 시간을 내어 결혼식에<br>참석해주시는 모든 분들께 감사드립니다.<br>예식이 지정좌석제로 진행되오니,<br>참석 여부를 회신해 주시면 더욱 감사하겠습니다.
+      </p>
+      <div class="bg-salon-ivory rounded-2xl p-3.5 text-left text-xs space-y-1.5 mb-4 border border-salon-line">
+        <div><span class="text-salon-bride mr-1.5">♥</span><strong class="text-salon-groom">신랑</strong> 김도연, <strong class="text-salon-bride">신부</strong> 이지유</div>
+        <div><span class="mr-1.5">📅</span>2027년 4월 10일 토요일 오후 5시 20분</div>
+        <div><span class="mr-1.5">📍</span>더살롱드웨딩홀 1층 레터홀</div>
+      </div>
+      <button onclick="closeMiniRsvpPopup(); openRsvpModal();" class="w-full py-3 rounded-xl bg-salon-point text-white text-xs font-ui font-semibold shadow-sm mb-2.5">
+        참석 여부 전달하기
+      </button>
+      <button onclick="closeMiniRsvpPopup()" class="text-[11px] font-ui text-salon-sub underline">
+        청첩장 먼저 둘러보기
+      </button>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       상세 참석 여부 전달 모달 (샘플 modal_rsvp + Google Apps Script 연동)
+       ===================================================== -->
+  <div id="rsvp-modal" class="fixed inset-0 z-50 bg-black/60 hidden items-center justify-center p-4">
+    <div class="bg-white w-full max-w-[380px] max-h-[88vh] overflow-y-auto rounded-3xl p-6 shadow-2xl border border-salon-line relative font-ui">
+      <button onclick="closeRsvpModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-salon-ivory text-salon-sub flex items-center justify-center">✕</button>
+      <h3 class="font-serif text-lg font-bold text-salon-dark text-center mb-5">참석 여부 전달</h3>
+
+      <form id="rsvp-form" onsubmit="submitRsvpToGAS(event)" class="space-y-3.5 text-xs">
+        <div>
+          <label class="block font-semibold text-salon-dark mb-1.5">어느 측 하객이신가요? <span class="text-salon-bride">*</span></label>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="cursor-pointer">
+              <input type="radio" name="side" value="신랑측" checked class="peer hidden">
+              <div class="py-2.5 text-center rounded-xl border border-salon-line peer-checked:bg-salon-groom peer-checked:text-white peer-checked:border-salon-groom font-semibold transition">신랑측</div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="side" value="신부측" class="peer hidden">
+              <div class="py-2.5 text-center rounded-xl border border-salon-line peer-checked:bg-salon-bride peer-checked:text-white peer-checked:border-salon-bride font-semibold transition">신부측</div>
+            </label>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-semibold text-salon-dark mb-1">참석여부 <span class="text-salon-bride">*</span></label>
+            <select id="rsvp-attend" class="w-full px-3 py-2.5 rounded-xl border border-salon-line bg-salon-ivory">
+              <option value="참석">참석</option>
+              <option value="불참석">불참석 (마음만 전달)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-salon-dark mb-1">식사여부 <span class="text-salon-bride">*</span></label>
+            <select id="rsvp-meal" class="w-full px-3 py-2.5 rounded-xl border border-salon-line bg-salon-ivory">
+              <option value="식사 O">식사 예정 (O)</option>
+              <option value="식사 X">식사 안 함 (X)</option>
+              <option value="미정">미정</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-semibold text-salon-dark mb-1">성함 <span class="text-salon-bride">*</span></label>
+            <input type="text" id="rsvp-name" required placeholder="성함 입력" class="w-full px-3 py-2.5 rounded-xl border border-salon-line">
+          </div>
+          <div>
+            <label class="block font-semibold text-salon-dark mb-1">연락처</label>
+            <input type="tel" id="rsvp-tel" placeholder="010-0000-0000" class="w-full px-3 py-2.5 rounded-xl border border-salon-line">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-semibold text-salon-dark mb-1">동행인 수 (본인 제외)</label>
+            <select id="rsvp-count" class="w-full px-3 py-2.5 rounded-xl border border-salon-line bg-white">
+              <option value="없음(본인 1명)">없음 (본인 1명)</option>
+              <option value="외 1명">외 1명 (총 2명)</option>
+              <option value="외 2명">외 2명 (총 3명)</option>
+              <option value="외 3명 이상">외 3명 이상</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-salon-dark mb-1">전세버스 탑승</label>
+            <select id="rsvp-bus" class="w-full px-3 py-2.5 rounded-xl border border-salon-line bg-white">
+              <option value="미탑승">미탑승</option>
+              <option value="탑승">탑승 희망</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-salon-dark mb-1">전달사항 (축하 메시지)</label>
+          <input type="text" id="rsvp-memo" placeholder="신랑·신부에게 전할 말씀" class="w-full px-3 py-2.5 rounded-xl border border-salon-line">
+        </div>
+
+        <label class="flex items-center gap-2 pt-1 text-[11px] text-salon-sub cursor-pointer">
+          <input type="checkbox" required checked class="accent-salon-point">
+          <span>(필수) 예식 참석 확인을 위한 개인정보 수집에 동의합니다.</span>
+        </label>
+
+        <button type="submit" id="rsvp-submit-btn" class="w-full py-3.5 rounded-xl bg-salon-point text-white font-semibold shadow-md hover:opacity-95 transition">
+          참석 의사 전달하기
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       전체화면 갤러리 라이트박스 모달
+       ===================================================== -->
+  <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/90 hidden flex-col items-center justify-between p-4 select-none font-ui">
+    <div class="w-full max-w-md flex justify-between items-center text-white text-xs pt-2">
+      <span id="lightbox-fraction">1 / 10</span>
+      <button onclick="closeLightbox()" class="px-3 py-1.5 rounded-full bg-white/15">닫기 ✕</button>
+    </div>
+    <div class="relative w-full max-w-md flex-1 flex items-center justify-center my-4">
+      <button onclick="stepLightbox(-1)" class="absolute left-1 z-10 w-10 h-10 rounded-full bg-black/50 text-white">❮</button>
+      <img id="lightbox-image" src="" alt="갤러리 확대" class="max-h-[75vh] max-w-full object-contain rounded-lg">
+      <button onclick="stepLightbox(1)" class="absolute right-1 z-10 w-10 h-10 rounded-full bg-black/50 text-white">❯</button>
+    </div>
+    <p class="text-[11px] text-white/60 pb-2">좌우 버튼을 눌러 사진을 감상하세요</p>
+  </div>
+
+  <!-- 토스트 알림창 -->
+  <div id="toast-box" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-all duration-300 font-ui">
+    <div class="bg-[#262626]/95 text-white px-5 py-2.5 rounded-full shadow-lg text-xs font-medium whitespace-nowrap" id="toast-text">
+      복사되었습니다.
+    </div>
+  </div>
+
+  <script>
+    /**
+     * =====================================================================
+     * [환경 설정 영역] 추후 Google Apps Script URL 및 GitHub 주소만 입력하면 됩니다!
+     * =====================================================================
+     */
+    const CONFIG = {
+      // 1. Google Apps Script 웹앱 배포 URL (추후 발급받은 https://script.google.com/macros/s/.../exec 입력)
+      GAS_WEB_APP_URL: "",
+
+      // 2. 하단에 표시할 본인 GitHub 저장소 주소 및 라벨
+      GITHUB_URL: "https://github.com/your-username/wedding-invitation",
+      GITHUB_LABEL: "github.com/your-username/wedding-invitation"
+    };
+
+    // GitHub 링크 반영
+    document.getElementById('github-repo-link').href = CONFIG.GITHUB_URL;
+    document.getElementById('github-repo-label').textContent = CONFIG.GITHUB_LABEL;
+
+    /**
+     * =====================================================================
+     * 1. 글씨 쓰는 모션 (Typewriter & 엄마의 손편지 순차 타이핑 애니메이션)
+     * =====================================================================
+     */
+    // 범용 타이핑 함수
+    function typeTextElement(element, text, speed = 75) {
+      return new Promise((resolve) => {
+        element.innerHTML = "";
+        let idx = 0;
+        const timer = setInterval(() => {
+          if (idx < text.length) {
+            const char = text[idx];
+            element.innerHTML += (char === "\n") ? "<br>" : char;
+            idx++;
+          } else {
+            clearInterval(timer);
+            resolve();
+          }
+        }, speed);
+      });
+    }
+
+    // (A) 인트로 오버레이 & 메인 표지 글씨 쓰기 모션
+    async function runCoverWritingMotion() {
+      const introEl = document.getElementById('intro-typing-text');
+      const coverEl = document.getElementById('cover-typewriter');
+      coverEl.innerHTML = "";
+
+      await typeTextElement(introEl, "김도연 ♥ 이지유 결혼합니다", 70);
+      setTimeout(() => {
+        dismissIntroOverlay();
+      }, 650);
+
+      setTimeout(async () => {
+        await typeTextElement(coverEl, "우리가 함께 걸어갈\n소중한 시작에 초대합니다", 85);
+      }, 900);
+    }
+
+    function dismissIntroOverlay() {
+      const overlay = document.getElementById('intro-loading-overlay');
+      if (!overlay.classList.contains('hidden-overlay')) {
+        overlay.classList.add('hidden-overlay');
+        // 첫 입장 후 잠시 뒤 미니 참석여부 팝업 노출 (샘플 동작과 동일)
+        if (!window.miniPopupShown) {
+          window.miniPopupShown = true;
+          setTimeout(() => {
+            document.getElementById('mini-rsvp-popup').classList.remove('hidden');
+            document.getElementById('mini-rsvp-popup').classList.add('flex');
+          }, 2600);
+        }
+      }
+    }
+
+    // (B) 초대의 글 제목 글씨 쓰기 모션
+    let greetingTyped = false;
+    async function runGreetingWritingMotion() {
+      const el = document.getElementById('greeting-title-typewriter');
+      await typeTextElement(el, "소중한 분들을 초대합니다.", 90);
+    }
+
+    // (C) 엄마의 조각 손편지(section_letter) 한 줄씩 순차 손글씨 모션
+    const motherLetterLines = [
+      "사랑하는 딸, 지유야!",
+      "네가 작은 손으로",
+      "우리 손가락을 꼭 잡던 날이",
+      "아직도 선명한데,",
+      "이제는 평생 잡고 걸어갈",
+      "한 사람의 손을 만났구나.",
+      "그 손 놓지 말고 천천히 걸어가렴.",
+      "네가 자란 만큼 사랑도 깊어지길.",
+      "참 많이 사랑하고, 축하한다.",
+      "엄마가"
+    ];
+
+    let isLetterWriting = false;
+    let letterRunId = 0;
+
+    async function startLetterWritingMotion() {
+      letterRunId++;
+      const currentRun = letterRunId;
+      isLetterWriting = true;
+
+      // 초기화
+      for (let i = 0; i < motherLetterLines.length; i++) {
+        document.getElementById(`letter-line-${i}`).textContent = "";
+        document.getElementById(`letter-cursor-${i}`).classList.add('hidden');
+      }
+
+      // 각 조각 종이마다 순차적으로 한 글자씩 필기
+      for (let i = 0; i < motherLetterLines.length; i++) {
+        if (currentRun !== letterRunId) return;
+        const lineEl = document.getElementById(`letter-line-${i}`);
+        const cursorEl = document.getElementById(`letter-cursor-${i}`);
+        cursorEl.classList.remove('hidden');
+
+        const lineText = motherLetterLines[i];
+        for (let c = 0; c < lineText.length; c++) {
+          if (currentRun !== letterRunId) return;
+          lineEl.textContent += lineText[c];
+          await new Promise(r => setTimeout(r, 55));
+        }
+
+        if (i < motherLetterLines.length - 1) {
+          cursorEl.classList.add('hidden');
+        }
+        await new Promise(r => setTimeout(r, 180));
+      }
+      isLetterWriting = false;
+    }
+
+    // 상단 버튼 클릭 시 전체 손글씨 모션 다시 재생
+    function replayAllWritingMotions() {
+      runGreetingWritingMotion();
+      startLetterWritingMotion();
+      const letterSection = document.getElementById('section_letter');
+      letterSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      showToast('✍️ 손글씨 작성 모션을 다시 재생합니다.');
+    }
+
+    /**
+     * =====================================================================
+     * 2. 10장 웨딩 갤러리 렌더링 & 보기 모드 전환 & 라이트박스
+     * =====================================================================
+     */
+    const galleryImages = [
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1544078751-58fee2d8a03b?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80"
+    ];
+
+    let currentLightboxIdx = 0;
+
+    function initGallery() {
+      const gridEl = document.getElementById('gallery-grid-view');
+      const scrollEl = document.getElementById('gallery-horizontal-box');
+
+      gridEl.innerHTML = galleryImages.map((src, i) => `
+        <div onclick="openLightbox(${i})" class="aspect-square rounded-xl overflow-hidden bg-salon-ivory cursor-pointer relative group shadow-2xs">
+          <img src="${src}" alt="웨딩사진 ${i+1}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+          <span class="absolute bottom-1.5 right-1.5 bg-black/45 text-white text-[10px] font-ui px-1.5 py-0.5 rounded-full">${i+1}</span>
+        </div>
+      `).join('');
+
+      scrollEl.innerHTML = galleryImages.map((src, i) => `
+        <div onclick="openLightbox(${i})" class="snap-center shrink-0 w-60 aspect-[3/4] rounded-2xl overflow-hidden bg-salon-ivory cursor-pointer relative shadow-sm border border-salon-line">
+          <img src="${src}" alt="웨딩사진 ${i+1}" class="w-full h-full object-cover">
+          <div class="absolute bottom-2.5 right-2.5 w-6 h-6 rounded-full bg-black/55 text-white text-xs font-ui flex items-center justify-center">${i+1}</div>
+        </div>
+      `).join('');
+    }
+
+    function switchGalleryMode(mode) {
+      const gridView = document.getElementById('gallery-grid-view');
+      const scrollView = document.getElementById('gallery-scroll-view');
+      const btnGrid = document.getElementById('btn-gal-grid');
+      const btnScroll = document.getElementById('btn-gal-scroll');
+
+      if (mode === 'grid') {
+        gridView.classList.remove('hidden');
+        scrollView.classList.add('hidden');
+        btnGrid.className = "px-3.5 py-1 rounded-full bg-salon-point text-white font-medium transition";
+        btnScroll.className = "px-3.5 py-1 rounded-full text-salon-sub font-medium transition";
+      } else {
+        gridView.classList.add('hidden');
+        scrollView.classList.remove('hidden');
+        btnScroll.className = "px-3.5 py-1 rounded-full bg-salon-point text-white font-medium transition";
+        btnGrid.className = "px-3.5 py-1 rounded-full text-salon-sub font-medium transition";
+      }
+    }
+
+    function openLightbox(idx) {
+      currentLightboxIdx = idx;
+      updateLightboxView();
+      const modal = document.getElementById('lightbox-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightbox-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function stepLightbox(dir) {
+      currentLightboxIdx = (currentLightboxIdx + dir + galleryImages.length) % galleryImages.length;
+      updateLightboxView();
+    }
+
+    function updateLightboxView() {
+      document.getElementById('lightbox-image').src = galleryImages[currentLightboxIdx];
+      document.getElementById('lightbox-fraction').textContent = `${currentLightboxIdx + 1} / ${galleryImages.length}`;
+    }
+
+    /**
+     * =====================================================================
+     * 3. 실시간 타이머: 예식 D-Day & 함께한 시간 (2012-07-11부터)
+     * =====================================================================
+     */
+    function updateTimers() {
+      const now = new Date();
+
+      // (1) 예식일 D-Day (2027-04-10 17:20)
+      const weddingTarget = new Date('2027-04-10T17:20:00+09:00');
+      const diffWedding = weddingTarget - now;
+      const ddayEl = document.getElementById('dday-countdown-text');
+
+      if (diffWedding > 0) {
+        const d = Math.floor(diffWedding / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diffWedding / (1000 * 60 * 60)) % 24);
+        const m = Math.floor((diffWedding / (1000 * 60)) % 60);
+        const s = Math.floor((diffWedding / 1000) % 60);
+        ddayEl.textContent = `${d}일 ${h}시간 ${m}분 ${s}초 남았습니다`;
+      } else {
+        ddayEl.textContent = "오늘 두 사람이 하나가 됩니다 ♥";
+      }
+
+      // (2) 함께한 시간 (2012-07-11 00:00 기준)
+      const firstDate = new Date('2012-07-11T00:00:00+09:00');
+      const diffTogether = now - firstDate;
+      const totalSeconds = Math.floor(diffTogether / 1000);
+      const totalDays = Math.floor(totalSeconds / 86400);
+      const years = Math.floor(totalDays / 365);
+      const months = Math.floor((totalDays % 365) / 30);
+      const days = (totalDays % 365) % 30;
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const mins = Math.floor((totalSeconds % 3600) / 60);
+      const secs = totalSeconds % 60;
+
+      document.getElementById('together-timer-text').textContent =
+        `"${years}년 ${months}개월 ${days}일 ${hours}시간 ${mins}분 ${secs}초"`;
+    }
+
+    /**
+     * =====================================================================
+     * 4. 공지사항 탭 전환, 계좌 아코디언, 클립보드 복사, 모달 & GAS 전송
+     * =====================================================================
+     */
+    function switchNoticeTab(idx) {
+      for (let i = 0; i < 3; i++) {
+        const tab = document.getElementById(`notice-tab-${i}`);
+        const panel = document.getElementById(`notice-panel-${i}`);
+        if (i === idx) {
+          tab.className = "py-2 rounded-lg bg-salon-point text-white font-semibold transition";
+          panel.classList.remove('hidden');
+        } else {
+          tab.className = "py-2 rounded-lg text-salon-sub font-medium transition";
+          panel.classList.add('hidden');
+        }
+      }
+    }
+
+    function toggleAccountAccordion(listId, arrowId) {
+      const list = document.getElementById(listId);
+      const arrow = document.getElementById(arrowId);
+      list.classList.toggle('open');
+      arrow.classList.toggle('rotate-180');
+    }
+
+    let toastTimeout = null;
+    function showToast(msg) {
+      const box = document.getElementById('toast-box');
+      document.getElementById('toast-text').textContent = msg;
+      box.classList.remove('opacity-0');
+      box.classList.add('opacity-100');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        box.classList.remove('opacity-100');
+        box.classList.add('opacity-0');
+      }, 2600);
+    }
+
+    function copyText(text, message) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast(message || '복사되었습니다.');
+      } catch (e) {
+        showToast('복사에 실패했습니다.');
+      }
+      document.body.removeChild(ta);
+    }
+
+    function closeMiniRsvpPopup() {
+      const p = document.getElementById('mini-rsvp-popup');
+      p.classList.add('hidden');
+      p.classList.remove('flex');
+    }
+
+    function openRsvpModal() {
+      const m = document.getElementById('rsvp-modal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function closeRsvpModal() {
+      const m = document.getElementById('rsvp-modal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    // Google Apps Script 웹앱으로 참석 여부 전송
+    async function submitRsvpToGAS(event) {
+      event.preventDefault();
+      const side = document.querySelector('input[name="side"]:checked').value;
+      const attend = document.getElementById('rsvp-attend').value;
+      const meal = document.getElementById('rsvp-meal').value;
+      const name = document.getElementById('rsvp-name').value.trim();
+      const tel = document.getElementById('rsvp-tel').value.trim();
+      const count = document.getElementById('rsvp-count').value;
+      const bus = document.getElementById('rsvp-bus').value;
+      const memo = document.getElementById('rsvp-memo').value.trim();
+      const submitBtn = document.getElementById('rsvp-submit-btn');
+
+      const payload = {
+        timestamp: new Date().toLocaleString('ko-KR'),
+        side,
+        name,
+        tel,
+        count,
+        status: `${attend} / ${meal} / 버스:${bus}`,
+        memo
+      };
+
+      if (!CONFIG.GAS_WEB_APP_URL) {
+        console.log('[GAS 미설정 - 테스트 전송 데이터]:', payload);
+        showToast(`${name}님(${side}), 참석 여부가 전달되었습니다! (테스트 모드)`);
+        closeRsvpModal();
+        document.getElementById('rsvp-form').reset();
+        return;
+      }
+
+      try {
+        submitBtn.disabled = true;
+        submitBtn.textContent = '전송 중...';
+        await fetch(CONFIG.GAS_WEB_APP_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        showToast(`${name}님, 소중한 참석 의사가 전달되었습니다!`);
+        closeRsvpModal();
+        document.getElementById('rsvp-form').reset();
+      } catch (err) {
+        showToast('전송 중 오류가 발생했습니다.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '참석 의사 전달하기';
+      }
+    }
+
+    /**
+     * =====================================================================
+     * 5. 꽃잎 흩날리는 캔버스 효과 & Tone.js 배경음악 & 스크롤 감지
+     * =====================================================================
+     */
+    function initPetalCanvas() {
+      const canvas = document.getElementById('petal-canvas');
+      const ctx = canvas.getContext('2d');
+      let w = canvas.width = window.innerWidth;
+      let h = canvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      });
+
+      const petals = Array.from({ length: 18 }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: 3 + Math.random() * 4,
+        vy: 0.5 + Math.random() * 0.9,
+        vx: -0.4 + Math.random() * 0.8,
+        angle: Math.random() * Math.PI * 2,
+        spin: 0.01 + Math.random() * 0.02
+      }));
+
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        petals.forEach(p => {
+          p.y += p.vy;
+          p.x += p.vx + Math.sin(p.angle) * 0.3;
+          p.angle += p.spin;
+          if (p.y > h + 10) { p.y = -10; p.x = Math.random() * w; }
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.angle);
+          ctx.fillStyle = 'rgba(255, 232, 228, 0.65)';
+          ctx.beginPath();
+          ctx.ellipse(0, 0, p.r, p.r * 0.6, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+
+    // Tone.js 웨딩 오르골 BGM
+    let bgmPlaying = false;
+    let synth = null;
+    let loop = null;
+
+    async function toggleBGM() {
+      await Tone.start();
+      const iconOff = document.getElementById('icon-bgm-off');
+      const iconOn = document.getElementById('icon-bgm-on');
+
+      if (!bgmPlaying) {
+        if (!synth) {
+          synth = new Tone.PolySynth(Tone.Synth, {
+            oscillator: { type: 'sine' },
+            envelope: { attack: 0.03, decay: 0.9, sustain: 0.15, release: 1.6 }
+          }).toDestination();
+          synth.volume.value = -12;
+
+          const melody = [
+            ['E5', 'C4'], ['D5', 'G4'], ['C5', 'A4'], ['B4', 'E4'],
+            ['A4', 'F4'], ['G4', 'C4'], ['A4', 'F4'], ['B4', 'G4']
+          ];
+          let idx = 0;
+          loop = new Tone.Loop((time) => {
+            synth.triggerAttackRelease(melody[idx % melody.length], '4n', time);
+            idx++;
+          }, '2n');
+        }
+        Tone.Transport.bpm.value = 72;
+        Tone.Transport.start();
+        loop.start(0);
+        bgmPlaying = true;
+        iconOff.classList.add('hidden');
+        iconOn.classList.remove('hidden');
+        showToast('🎵 배경음악이 재생됩니다.');
+      } else {
+        Tone.Transport.stop();
+        bgmPlaying = false;
+        iconOn.classList.add('hidden');
+        iconOff.classList.remove('hidden');
+        showToast('배경음악이 정지되었습니다.');
+      }
+    }
+
+    function toggleDeviceFrame() {
+      document.body.classList.toggle('device-frame-mode');
+      const btn = document.getElementById('btn-frame-toggle');
+      btn.textContent = document.body.classList.contains('device-frame-mode')
+        ? '스마트폰 프레임 뷰'
+        : '모바일 꽉 찬 뷰';
+    }
+
+    // 스크롤 시 각 섹션 페이드업 & 손편지 섹션 도달 시 자동으로 글씨 쓰는 모션 시작
+    let letterPlayedOnce = false;
+    function initScrollObserver() {
+      const reveals = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, { threshold: 0.12 });
+      reveals.forEach(el => observer.observe(el));
+
+      // 초대의 글 섹션 진입 시 타이핑
+      const greetingSec = document.getElementById('section-greeting');
+      const greetingObs = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !greetingTyped) {
+          greetingTyped = true;
+          runGreetingWritingMotion();
+        }
+      }, { threshold: 0.35 });
+      greetingObs.observe(greetingSec);
+
+      // 엄마의 손편지 섹션 진입 시 한 글자씩 써지는 모션 자동 실행
+      const letterSec = document.getElementById('section_letter');
+      const letterObs = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !letterPlayedOnce) {
+          letterPlayedOnce = true;
+          startLetterWritingMotion();
+        }
+      }, { threshold: 0.28 });
+      letterObs.observe(letterSec);
+    }
+
+    window.onload = function () {
+      initGallery();
+      initPetalCanvas();
+      updateTimers();
+      setInterval(updateTimers, 1000);
+      initScrollObserver();
+      runCoverWritingMotion();
+    };
+  </script>
+</body>
+</html>
