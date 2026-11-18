@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <!--
+    브라우저 상단 UI 색상입니다. 전체 배경색(--background)을 바꾸면 이 값도 함께 바꾸세요.
+    일부 브라우저는 theme-color가 적용되지 않을 수 있습니다.
+  -->
+  <meta name="theme-color" content="#FFFBF5">
+
+  <!-- ★ 날짜를 변경한다면 아래 description/title, 본문 날짜, aria-label도 확인하세요. -->
+  <meta name="description" content="새로운 서비스를 준비 중입니다. 2026년 12월 1일 대고객 오픈 예정입니다.">
+  <title>공사중 | 2026.12.01 대고객 오픈</title>
+
+  <style>
+    /* ======================================================================
+       [가이드] 자주 수정하는 위치 - Ctrl+F / Cmd+F 로 찾아보세요.
+
+       1. 전체 배경색          : --background
+       2. '대고객 오픈' 박스색 : --opening-bg
+       3. 각 영역 사이 간격    : 아래 [1] '공통 간격 변수' 6개
+       4. 🚧 그림 크기        : .construction-icon > font-size
+       5. 404 크기            : .error-code > font-size
+       6. 영어 문구 크기       : .english-title > font-size
+       7. 새단장 제목 크기     : .korean-title > font-size
+       8. 설명 문장 크기       : .description > font-size
+       9. 오픈 박스 내부       : .opening > gap / padding / font-size
+      10. 맨 아래 안내문       : .footer > margin / font-size
+      11. 휴대폰 전용 설정     : [5] 너비 480/350/300px 이하
+      12. 꽃잎의 색·수·속도    : 아래쪽 <script> 안 [JS 2]
+      13. 미리보기 버튼 숨김   : <script> 안 SHOW_PREVIEW_TOOLBAR = false
+
+       CSS 핵심 용어
+       - font-size    : 글자 크기
+       - margin      : 요소 바깥쪽 여백(다른 요소와의 거리)
+       - padding     : 요소 안쪽 여백(테두리와 글자 사이)
+       - gap         : 같은 박스 안에 나란히 있는 요소들의 거리
+       - line-height : 한 줄의 높이/줄 간격
+       - border      : 테두리
+       - border-radius: 둥근 모서리
+       - clamp(최소, 유동값, 최대): 화면에 맞춰 글자 크기 자동 조절
+       - font-size가 vw/cqw 두 줄인 경우, 구형/최신 브라우저를 위해 둘 다 수정
+
+       중요: 모바일에서는 [5] 항목에서 일부 CSS 값을 다시 지정합니다.
+       PC 값만 바꿨는데 모바일이 그대로면 480/350/300px 규칙도 확인하세요.
+       ====================================================================== */
+
+    /* ======================================================================
+       [1] 색상과 공통 간격 설정 - 가장 자주 편집할 곳
+       ====================================================================== */
+    :root {
+      /* ① 글자 색상 */
+      --ink: #17191c;       /* 제목, 테두리 등 진한 글자색 */
+      --muted: #64696f;     /* 설명 문구 회색 */
+
+      /* ② 주요 배경색 */
+      --background: #FFFBF5; /* 전체 배경: 밀키 아이보리 */
+      --opening-bg: #f8dce6; /* 대고객 오픈 박스: 연한 핑크 */
+      /* 대체색: 라이트 아이보리 #FFF4E3 / 크림 화이트 #FFF8EC / 흰색 #FFFFFF */
+
+      /* ③ 영역 사이 '세로 간격': px 숫자만 바꿔도 됩니다.
+         주의: 480/350px 이하에서는 영어 제목 간격을 별도로 덮어씁니다. */
+      --space-icon-to-404: 6px;          /* 🚧 아래 ↔ 404 */
+      --space-404-to-english: 12px;      /* 404 아래 ↔ UNDER CONSTRUCTION */
+      --space-english-to-korean: 44px;   /* 영어 제목 아래 ↔ 새단장 제목 (PC 기본) */
+      --space-korean-to-description: 12px; /* 새단장 제목 아래 ↔ 설명 */
+      --space-description-to-opening: 30px; /* 설명 아래 ↔ 오픈 박스 */
+      --space-opening-to-footer: 30px;   /* 오픈 박스 아래 ↔ 하단 안내 */
+    }
+
+    /* ======================================================================
+       [2] 페이지 기본값
+       ====================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box; /* padding·테두리 포함해 요소 크기 계산 */
+    }
+
+    html { -webkit-text-size-adjust: 100%; } /* iPhone 자동 글자 확대 방지 */
+
+    body {
+      margin: 0;                  /* 브라우저 기본 바깥 여백 제거 */
+      background: #e8ebef;       /* '스마트폰 프레임 보기' 바깥쪽 회색 배경 */
+      color: var(--ink);
+      font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", Arial, sans-serif;
+    }
+
+    [hidden] { display: none !important; } /* 미리보기 버튼을 숨길 때 사용 */
+
+    /* ======================================================================
+       [3] 우측 상단 '스마트폰 프레임 보기' 버튼
+       - 화면 색상이나 동작과 무관하며, 개발·디자인 확인용입니다.
+       - 공개 전에 JS의 SHOW_PREVIEW_TOOLBAR 값을 false로 바꾸세요.
+       ====================================================================== */
+    .preview-toolbar {
+      position: fixed;
+      top: calc(14px + env(safe-area-inset-top, 0px));
+      right: calc(14px + env(safe-area-inset-right, 0px));
+      z-index: 20;
+    }
+
+    .view-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;                   /* 버튼 안 아이콘 ↔ 글자 간격 */
+      min-height: 44px;           /* 손가락으로 누르기 쉬운 최소 높이 */
+      padding: 10px 16px;         /* 버튼 내부 위아래 / 좌우 여백 */
+      border: 1px solid #d0d3d8;
+      border-radius: 999px;       /* 알약 모양 버튼 */
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 18px rgba(25, 29, 36, 0.10);
+      color: #1d222a;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .view-toggle:hover { background: #fff8e9; }
+    .view-toggle:focus-visible { outline: 3px solid #3975d7; outline-offset: 3px; }
+    .view-toggle[aria-pressed="true"] { border-color: #eead42; background: #fff4d9; }
+
+    /* ======================================================================
+       [4] 실제 페이지 공통 배치 - PC/모바일 모두 적용
+       ====================================================================== */
+
+    /* 4-1. 화면 높이: 100vh는 구형 브라우저 대체값, 100dvh는 모바일 주소창 대응 */
+    .preview-stage {
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    .device-shell {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+    }
+
+    .phone-notch { display: none; } /* 기본은 노치 모양 숨김 */
+
+    /* 4-2. 실제 안내 페이지의 배경색과 화면 경계 */
+    .site-screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--background); /* ★ 전체 배경색은 [1]에서 변경 */
+      container-type: inline-size;  /* PC/모바일 미리보기 폭 기준 반응형 CSS 활성화 */
+      container-name: website;
+      isolation: isolate;
+    }
+
+    /* 4-3. 흩날리는 꽃잎이 표시되는 투명 캔버스 (텍스트 클릭 방해 없음) */
+    #petal-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* 4-4. 내용 표시 영역: 상하좌우 여백 및 세로 스크롤 담당 */
+    .screen-content {
+      position: relative;
+      z-index: 1;          /* 꽃잎보다 글자를 앞에 배치 */
+      display: flex;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;    /* 가로모드/높이가 낮은 기기에서 세로로 스크롤 가능 */
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+
+      /* padding 순서: 위 / 오른쪽 / 아래 / 왼쪽
+         env(safe-area-inset-*) : 아이폰 노치·홈 인디케이터 안전 영역 반영 */
+      padding: max(50px, env(safe-area-inset-top, 0px))
+               max(20px, env(safe-area-inset-right, 0px))
+               max(20px, env(safe-area-inset-bottom, 0px))
+               max(20px, env(safe-area-inset-left, 0px));
+    }
+
+    /* 4-5. 내용 최대 폭과 가로/세로 중앙 정렬 */
+    .content-wrap {
+      width: 100%;
+      max-width: 620px; /* PC에서 콘텐츠가 지나치게 넓어지지 않도록 제한 */
+      margin: auto;     /* 콘텐츠가 화면보다 작으면 중앙 배치 */
+      text-align: center;
+    }
+
+    /* ----------------------------------------------------------------------
+       4-6. 🚧 공사 안내 아이콘
+       - 아이콘 종류: 아래 HTML에서 🚧 문자 자체 변경
+       - 아이콘 크기: font-size 값 변경
+       ---------------------------------------------------------------------- */
+    .construction-icon {
+      display: block;
+      margin: 0 0 var(--space-icon-to-404); /* ★ 아이콘 ↔ 404 거리 */
+      font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+      /* 같은 속성이 2개인 이유: vw는 구형 브라우저용, cqw는 화면 컨테이너 기준 */
+      font-size: clamp(80px, 17vw, 110px);
+      font-size: clamp(80px, 17cqw, 110px); /* ★ 아이콘 최소 / 자동 / 최대 크기 */
+      line-height: 1.2;
+      filter: drop-shadow(0 8px 0 rgba(0, 0, 0, .07));
+    }
+
+    /* 4-7. '404' 글자 */
+    .error-code {
+      margin: 0;
+      padding-right: .09em; /* 글자 시각적 가운데 정렬 미세 보정 */
+      font-size: clamp(55px, 12vw, 85px);
+      font-size: clamp(55px, 12cqw, 85px); /* ★ 404 글자 크기 */
+      font-weight: 900;         /* 굵기: 숫자가 클수록 굵음 */
+      letter-spacing: -.09em;  /* 글자 사이 간격 */
+      line-height: 1;
+    }
+
+    /* 4-8. 'UNDER CONSTRUCTION' 글자 */
+    .english-title {
+      /* margin 순서: 위 / 좌우 / 아래
+         영어 제목 앞뒤 간격은 [1] 변수에서 수정하면 됩니다. */
+      margin: var(--space-404-to-english) 0 var(--space-english-to-korean);
+      font-size: clamp(20px, 4.5vw, 30px);
+      font-size: clamp(20px, 4.5cqw, 30px); /* ★ 영어 문구 글자 크기 */
+      font-weight: 900;
+      letter-spacing: -.045em;
+      line-height: 1.2;
+    }
+
+    /* 4-9. 검정/노랑 경고 줄: CSS에서 숨김 (표시하려면 디자인 CSS도 추가해야 함) */
+    .caution-line { display: none; }
+
+    /* 4-10. '🌸 새단장 중입니다 🌸' 메인 제목 */
+    .korean-title {
+      margin: 0 0 var(--space-korean-to-description); /* ★ 제목 ↔ 설명 문구 거리 */
+      font-size: clamp(30px, 6.5vw, 42px);
+      font-size: clamp(30px, 6.5cqw, 42px); /* ★ 한국어 제목 글자 크기 */
+      font-weight: 800;
+      letter-spacing: -.055em;
+    }
+
+    /* 4-11. 제목 아래 설명 문구 (실제 문장은 HTML에서 변경) */
+    .description {
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;  /* ★ PC에서의 설명 글자 크기 */
+      line-height: 1.75; /* 글자가 2줄 이상일 때 줄 간격 */
+      word-break: keep-all; /* 한글 단어 중간에서 끊기는 것을 가능한 방지 */
+    }
+
+    /* 4-12. '🗓️ 대고객 오픈 - 2026.12.01 🤵‍♂️👰‍♀️' 안내 박스 */
+    .opening {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;        /* 폭이 좁으면 이모지 등을 아래 줄로 배치 */
+      gap: 9px;               /* ★ 달력 ↔ 날짜 ↔ 신랑·신부 사이 간격 */
+      max-width: 100%;
+      min-width: 0;
+      margin-top: var(--space-description-to-opening); /* ★ 설명 ↔ 박스 거리 */
+      padding: 13px 22px;     /* ★ 박스 내부 위아래 13 / 좌우 22px */
+      border: 2px solid var(--ink); /* ★ 박스 테두리 굵기·색상 */
+      border-radius: 10px;    /* ★ 박스 모서리 둥글기 */
+      background: var(--opening-bg); /* ★ 박스 배경색은 [1]에서 변경 */
+      font-size: clamp(15px, 4vw, 20px);
+      font-size: clamp(15px, 4cqw, 20px); /* ★ 박스 문구 글자 크기 */
+      font-weight: 800;
+      letter-spacing: -.025em;
+    }
+
+    /* 4-13. 박스 안 아이콘/문구를 개별 조절하고 싶을 때 */
+    .opening .calendar {
+      flex: none;
+      font-size: 22px; /* 달력 이모지 크기 */
+    }
+    .opening-copy {
+      white-space: nowrap; /* 기본은 날짜 문장을 한 줄로 유지 */
+    }
+    .wedding-couple {
+      flex: none;
+      font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+      font-size: clamp(19px, 5vw, 25px);
+      font-size: clamp(19px, 5cqw, 25px); /* ★ 신랑·신부 이모지 크기 */
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    /* 4-14. 맨 아래 '이용에 불편을 드려 죄송합니다.' */
+    .footer {
+      margin: var(--space-opening-to-footer) 0 0; /* ★ 오픈 박스 ↔ 하단 안내 거리 */
+      color: #898d92;
+      font-size: 14px; /* ★ 하단 안내 글자 크기 */
+    }
+
+    /* ======================================================================
+       [5] 모바일 화면 너비별 자동 조절
+
+       ⚠ 아래 설정은 PC용 CSS보다 뒤에 있으므로 해당 너비에서 우선 적용됩니다.
+       예: 영어 문구 아래 간격은 PC 44px → 480px 이하 34px → 350px 이하 20px
+       ★ 스마트폰 프레임 보기 모드에서도 안쪽 '컨테이너 너비'로 판단합니다.
+       ====================================================================== */
+
+    /* 5-1. 일반적인 휴대폰 화면: 너비 480px 이하 */
+    @container website (max-width: 480px) {
+      .screen-content {
+        --space-english-to-korean: 34px; /* ★ 모바일에서 영어 ↔ 한글 제목 간격 */
+        padding: max(48px, env(safe-area-inset-top, 0px))
+                 max(16px, env(safe-area-inset-right, 0px))
+                 max(26px, env(safe-area-inset-bottom, 0px))
+                 max(16px, env(safe-area-inset-left, 0px));
+      }
+      .description { font-size: 14px; } /* 모바일 설명 글자 크기 */
+      .opening { padding: 13px 16px; gap: 6px; } /* 오픈 박스 좌우 여백·요소 간격 */
+      .opening .calendar { font-size: 20px; }
+    }
+
+    /* 5-2. 작은 휴대폰 화면: 너비 350px 이하 */
+    @container website (max-width: 350px) {
+      .screen-content {
+        --space-404-to-english: 10px;    /* ★ 404 ↔ 영어 제목 간격 */
+        --space-english-to-korean: 20px; /* ★ 영어 제목 ↔ 한글 제목 간격 */
+        padding: max(44px, env(safe-area-inset-top, 0px))
+                 max(12px, env(safe-area-inset-right, 0px))
+                 max(20px, env(safe-area-inset-bottom, 0px))
+                 max(12px, env(safe-area-inset-left, 0px));
+      }
+      .construction-icon {
+        font-size: clamp(62px, 19vw, 80px);
+        font-size: clamp(62px, 19cqw, 80px);
+      }
+      .error-code {
+        font-size: clamp(48px, 15vw, 55px);
+        font-size: clamp(48px, 15cqw, 55px);
+      }
+      .english-title {
+        font-size: clamp(16px, 5.5vw, 20px);
+        font-size: clamp(16px, 5.5cqw, 20px);
+      }
+      .korean-title {
+        font-size: clamp(22px, 8vw, 28px);
+        font-size: clamp(22px, 8cqw, 28px);
+        line-height: 1.25;
+        word-break: keep-all;
+      }
+      .description { font-size: 14px; line-height: 1.65; }
+      .opening {
+        padding: 12px 10px;
+        gap: 5px;
+        font-size: clamp(13px, 4vw, 14px);
+        font-size: clamp(13px, 4cqw, 14px);
+      }
+      .opening .calendar { font-size: 18px; }
+      .wedding-couple {
+        font-size: clamp(17px, 5.5vw, 19px);
+        font-size: clamp(17px, 5.5cqw, 19px);
+      }
+    }
+
+    /* 5-3. 매우 작은 스마트폰/프레임: 너비 300px 이하 */
+    @container website (max-width: 300px) {
+      .screen-content {
+        padding-right: max(10px, env(safe-area-inset-right, 0px));
+        padding-left: max(10px, env(safe-area-inset-left, 0px));
+      }
+      .korean-title {
+        font-size: clamp(20px, 7.8vw, 24px);
+        font-size: clamp(20px, 7.8cqw, 24px);
+      }
+      .wedding-couple {
+        flex-basis: 100%; /* 이모지를 날짜 아래쪽에 배치 */
+        text-align: center;
+      }
+      .opening-copy {
+        white-space: normal; /* 극단적으로 좁은 화면에서 날짜 줄바꿈 허용 */
+        overflow-wrap: anywhere;
+      }
+    }
+
+    /* ======================================================================
+       [6] '스마트폰 프레임 보기'를 켰을 때만 적용되는 디자인
+       - 실제 모바일로 접속한 화면과 다릅니다. PC에서 가상 프레임을 그립니다.
+       - 프레임 외관(테두리, 모서리, 노치 등)을 수정할 때만 건드리세요.
+       ====================================================================== */
+    .preview-stage.phone-mode {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      height: 100dvh;
+      padding: calc(64px + env(safe-area-inset-top, 0px)) 14px
+               calc(12px + env(safe-area-inset-bottom, 0px));
+      overflow: hidden;
+    }
+
+    .phone-mode .device-shell {
+      width: min(390px, 100%); /* ★ PC에 보이는 가상 스마트폰 최대 너비 */
+      height: 100%;
+      max-height: 820px;      /* ★ PC에 보이는 가상 스마트폰 최대 높이 */
+      padding: 8px;
+      border: 2px solid #41454f;
+      border-radius: 44px;
+      background: #1b1d23;
+      box-shadow: 0 20px 55px rgba(20, 22, 27, .30),
+                  inset 0 0 0 1px #6c717b;
+    }
+
+    .phone-mode .site-screen { border-radius: 35px; }
+    .phone-mode .screen-content {
+      padding-top: max(52px, env(safe-area-inset-top, 0px));
+    }
+    .phone-mode .phone-notch {
+      display: block;
+      position: absolute;
+      z-index: 5;
+      top: 12px;
+      left: 50%;
+      width: 92px;
+      height: 25px;
+      transform: translateX(-50%);
+      border-radius: 20px;
+      background: #1b1d23;
+      pointer-events: none;
+    }
+    .phone-mode .phone-notch::after {
+      content: "";
+      position: absolute;
+      top: 9px;
+      left: 30px;
+      width: 32px;
+      height: 5px;
+      border-radius: 10px;
+      background: #383c45;
+    }
+
+    /* 6-1. 실제 브라우저 폭이 480px 이하인 경우: 미리보기 버튼/프레임 크기 조정 */
+    @media (max-width: 480px) {
+      .preview-toolbar { right: calc(10px + env(safe-area-inset-right, 0px)); }
+      .view-toggle { min-height: 42px; padding: 9px 13px; font-size: 12px; }
+      .preview-stage.phone-mode { padding-left: 11px; padding-right: 11px; }
+      .phone-mode .device-shell { border-radius: 37px; padding: 6px; }
+      .phone-mode .site-screen { border-radius: 29px; }
+    }
+
+    /* ======================================================================
+       [7] 구형 브라우저 대응 (평소에는 수정하지 않아도 됨)
+
+       @container를 지원하지 않는 Safari 등의 브라우저에서는
+       위 [5] 대신 화면 전체 너비(@media)로 글자 크기와 여백을 조절합니다.
+       ★ [5]의 모바일 크기/간격을 바꿀 때는 여기도 함께 맞추는 것이 좋습니다.
+       ====================================================================== */
+    @supports not (container-type: inline-size) {
+      @media (max-width: 480px) {
+        .screen-content {
+          --space-english-to-korean: 34px;
+          padding: 48px 16px 26px;
+        }
+        .description { font-size: 14px; }
+        .opening { padding: 13px 16px; gap: 6px; }
+      }
+      @media (max-width: 350px) {
+        .screen-content {
+          --space-404-to-english: 10px;
+          --space-english-to-korean: 20px;
+          padding: 44px 12px 20px;
+        }
+        .construction-icon { font-size: clamp(62px, 19vw, 80px); }
+        .error-code { font-size: clamp(48px, 15vw, 55px); }
+        .english-title { font-size: clamp(16px, 5.5vw, 20px); }
+        .korean-title { font-size: clamp(22px, 8vw, 28px); }
+        .opening { padding: 12px 10px; font-size: 13px; }
+      }
+      @media (max-width: 300px) {
+        .korean-title { font-size: 22px; }
+        .wedding-couple { flex-basis: 100%; text-align: center; }
+        .opening-copy { white-space: normal; }
+      }
+      .phone-mode .construction-icon { font-size: 80px; }
+      .phone-mode .error-code { font-size: 55px; }
+      .phone-mode .english-title { font-size: 20px; }
+      .phone-mode .korean-title { font-size: 28px; }
+      .phone-mode .opening { font-size: 15px; padding: 13px 16px; }
+      .phone-mode .opening-copy { white-space: normal; }
+      .phone-mode .description { font-size: 14px; }
+    }
+
+    /* 7-1. 기기에서 '동작 줄이기'를 설정한 경우 버튼 전환 효과 제한 */
+    @media (prefers-reduced-motion: reduce) {
+      .view-toggle { transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===============================================================
+       [HTML] 실제로 보이는 글자를 바꾸는 곳
+       아래의 내용을 고쳐도 CSS 클래스 이름(class="...")은 그대로 두세요.
+       예: '새단장 중입니다'의 글자를 바꿀 때 korean-title은 지우지 마세요.
+       =============================================================== -->
+
+  <!-- [HTML 1] 미리보기 버튼 (공개 시 JS 설정으로 숨기기) -->
+  <div class="preview-toolbar" id="preview-toolbar">
+    <button type="button" class="view-toggle" id="view-toggle" aria-pressed="false"
+            aria-controls="preview-stage">
+      <span id="toggle-icon" aria-hidden="true">📱</span>
+      <span id="toggle-label">스마트폰 프레임 보기</span>
+    </button>
+  </div>
+
+  <!-- [HTML 2] 전체 화면 및 가상 스마트폰 구조: 배치를 바꾸지 않는 것이 좋습니다. -->
+  <div class="preview-stage" id="preview-stage">
+    <div class="device-shell">
+      <div class="phone-notch" aria-hidden="true"></div>
+      <section class="site-screen" id="site-screen" aria-label="서비스 오픈 안내">
+        <!-- [HTML 3] 꽃잎 효과: JS가 이 캔버스 위에 꽃잎을 그립니다. -->
+        <canvas id="petal-canvas" aria-hidden="true"></canvas>
+
+        <div class="screen-content">
+          <main class="content-wrap">
+            <!-- [HTML 4] 상단 공사 이모지 / 404 / 영어 문구 -->
+            <span class="construction-icon" role="img" aria-label="공사 안내 표지">🚧</span>
+            <h1 class="error-code">404</h1>
+            <p class="english-title">UNDER CONSTRUCTION</p>
+
+            <!-- 경고 줄은 CSS에서 숨김(display: none). HTML에서 삭제해도 됩니다. -->
+            <div class="caution-line" aria-hidden="true"></div>
+
+            <!-- [HTML 5] 메인 제목과 설명 문구 -->
+            <h2 class="korean-title">🌸  새단장 중입니다  🌸</h2>
+            <p class="description">
+              더 나은 서비스를 제공하기 위해 준비하고 있습니다.<br>
+              새로운 모습으로 곧 찾아뵙겠습니다.
+            </p>
+
+            <!-- [HTML 6] 대고객 오픈 박스: 날짜/문구/이모지 직접 수정
+                 날짜를 바꾸면 <head>의 description/title과 아래 aria-label도 맞추세요. -->
+            <div class="opening" aria-label="2026년 12월 1일 대고객 오픈, 신랑과 신부">
+              <span class="calendar" aria-hidden="true"> 🗓️</span>
+              <span class="opening-copy">대고객 오픈 - 2026.12.01</span>
+              <span class="wedding-couple" aria-hidden="true">🤵‍♂️👰‍♀️</span>
+            </div>
+
+            <!-- [HTML 7] 페이지 하단의 작은 안내 문구 -->
+            <p class="footer">이용에 불편을 드려 죄송합니다.</p>
+          </main>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    'use strict';
+
+    /* =============================================================
+     * [JS 1] 미리보기 스위치
+     * - true  : 우측 상단에 '스마트폰 프레임 보기' 버튼이 표시됨
+     * - false : 버튼을 숨김 (실제 공개할 때 권장)
+     * - 스마트폰에서 열면 별도 전환 없이 실제 모바일 화면 크기로 표시됨
+     * ============================================================= */
+
+    // ★ 실제 공개하기 전에 false로 바꾸면 미리보기 버튼이 사라집니다.
+    const SHOW_PREVIEW_TOOLBAR = false;
+    
+    const toolbar = document.getElementById('preview-toolbar');
+    const toggleButton = document.getElementById('view-toggle');
+    const stage = document.getElementById('preview-stage');
+    const toggleLabel = document.getElementById('toggle-label');
+    const toggleIcon = document.getElementById('toggle-icon');
+
+    if (!SHOW_PREVIEW_TOOLBAR) toolbar.hidden = true;
+
+    // 화면 전환 버튼을 눌렀을 때 프레임 적용 여부와 버튼 문구를 동기화합니다.
+    // 특별한 이유가 없다면 이 함수는 수정하지 않아도 됩니다.
+    function setPhoneMode(enabled) {
+      stage.classList.toggle('phone-mode', enabled);
+      toggleButton.setAttribute('aria-pressed', String(enabled));
+      toggleIcon.textContent = enabled ? '🖥️' : '📱';
+      toggleLabel.textContent = enabled ? '전체 화면으로 보기' : '스마트폰 프레임 보기';
+    }
+
+    toggleButton.addEventListener('click', () => {
+      setPhoneMode(!stage.classList.contains('phone-mode'));
+    });
+
+    /* =============================================================
+     * [JS 2] 흩날리는 꽃잎 애니메이션
+     * 직접 수정하기 좋은 항목:
+     *   A. colors 배열     : 꽃잎의 색상과 투명도 (rgba의 마지막 숫자)
+     *   B. makePetal().r  : 꽃잎의 크기 (기본 약 3~8px)
+     *   C. makePetal().vy : 내려오는 속도 (값이 클수록 빠름)
+     *   D. resize().count : 화면 크기에 따른 꽃잎 수 (24/30/50개)
+     *   E. animate()      : 아래 코드에서 1000 / 30은 초당 최대 30프레임
+     * 꽃잎은 별도 이미지 파일이 아니라 Canvas로 직접 그립니다.
+     * 사용자가 '동작 줄이기'를 설정하면 애니메이션을 중지합니다.
+     * ============================================================= */
+    // 전체 페이지가 아닌 현재 표시 영역을 기준으로 꽃잎을 그립니다.
+    // 따라서 모바일 프레임 전환 후에도 화면 안에서만 꽃잎이 움직입니다.
+    function initPetalCanvas() {
+      const screen = document.getElementById('site-screen');
+      const canvas = document.getElementById('petal-canvas');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+      // ★ 꽃잎 색상 목록: rgba(R, G, B, 투명도). 마지막 값은 0(투명)~1(불투명)입니다.
+      const colors = [
+        'rgba(244, 173, 185, 0.72)',
+        'rgba(255, 205, 210, 0.72)',
+        'rgba(251, 224, 220, 0.83)',
+        'rgba(242, 182, 163, 0.68)',
+        'rgba(255, 228, 198, 0.70)'
+      ];
+
+      let w = 1;
+      let h = 1;
+      let ratio = 1;
+      let petals = [];
+      let rafId = null;
+      let lastFrame = 0;
+
+      // 꽃잎 하나의 위치·크기·이동 속도 등을 만듭니다.
+      function makePetal(randomY = false) {
+        return {
+          x: Math.random() * w,
+          y: randomY ? Math.random() * h : -12 - Math.random() * 60,
+          r: 3 + Math.random() * 5, // ★ 꽃잎 크기: 기본 약 3~8px
+          vx: -0.35 + Math.random() * 0.7,
+          vy: 0.45 + Math.random() * 0.85, // ★ 낙하 속도
+          angle: Math.random() * Math.PI * 2,
+          spin: (Math.random() < 0.5 ? -1 : 1) *
+                (0.008 + Math.random() * 0.025),
+          sway: Math.random() * Math.PI * 2,
+          swaySpeed: 0.01 + Math.random() * 0.018,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        };
+      }
+
+      // 계산된 위치에 꽃잎 타원형을 실제로 그립니다.
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        for (const p of petals) {
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.angle);
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.ellipse(0, 0, p.r, p.r * .62, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      // 화면 크기/휴대폰 미리보기 변경 시 캔버스 크기와 꽃잎 수를 맞춥니다.
+      function resize() {
+        const rect = screen.getBoundingClientRect();
+        const nextW = Math.max(1, Math.round(rect.width));
+        const nextH = Math.max(1, Math.round(rect.height));
+        const nextRatio = Math.min(window.devicePixelRatio || 1, 2);
+        if (w === nextW && h === nextH && ratio === nextRatio && petals.length) return;
+
+        w = nextW;
+        h = nextH;
+        ratio = nextRatio;
+        canvas.width = Math.round(w * ratio);
+        canvas.height = Math.round(h * ratio);
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        // ★ 꽃잎 수: 너비 350px 이하 24개 / 600px 미만 30개 / 그 외 50개
+        const count = w <= 350 ? 24 : w < 600 ? 30 : 50;
+        petals = Array.from({ length: count }, () => makePetal(true));
+        draw();
+      }
+
+      // 성능 최적화: 최대 30fps로 실행하여 스마트폰의 배터리 사용량을 줄입니다.
+      function animate(time) {
+        rafId = requestAnimationFrame(animate);
+        if (time - lastFrame < 1000 / 30) return;
+        const step = lastFrame ? Math.min((time - lastFrame) / 16.667, 2.5) : 1;
+        lastFrame = time;
+
+        for (let i = 0; i < petals.length; i++) {
+          const p = petals[i];
+          p.sway += p.swaySpeed * step;
+          p.x += (p.vx + Math.sin(p.sway) * .52) * step;
+          p.y += p.vy * step;
+          p.angle += p.spin * step;
+          if (p.y > h + 15) petals[i] = makePetal();
+          else if (p.x < -20) p.x = w + 20;
+          else if (p.x > w + 20) p.x = -20;
+        }
+        draw();
+      }
+
+      // 화면이 숨겨지거나 애니메이션 축소 설정이 켜지면 반복 재생을 멈춥니다.
+      function syncAnimation() {
+        if (rafId !== null) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+        lastFrame = 0;
+        if (!motionPreference.matches && !document.hidden) {
+          rafId = requestAnimationFrame(animate);
+        } else {
+          draw();
+        }
+      }
+
+      // 최신 브라우저는 ResizeObserver, 구형 브라우저는 resize 이벤트를 사용합니다.
+      if ('ResizeObserver' in window) {
+        new ResizeObserver(resize).observe(screen);
+      } else {
+        window.addEventListener('resize', resize, { passive: true });
+      }
+      document.addEventListener('visibilitychange', syncAnimation);
+      if (motionPreference.addEventListener) {
+        motionPreference.addEventListener('change', syncAnimation);
+      } else if (motionPreference.addListener) {
+        motionPreference.addListener(syncAnimation);
+      }
+      resize();
+      syncAnimation();
+    }
+
+    // 페이지를 열면 꽃잎 효과를 시작합니다.
+    initPetalCanvas();
+  </script>
+</body>
+</html>
