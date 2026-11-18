@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f7f5">
+  <meta name="description" content="새로운 서비스를 준비 중입니다. 2026년 12월 1일 대고객 오픈 예정입니다.">
+  <title>공사중 | 2026.12.01 대고객 오픈</title>
+  <style>
+    :root {
+      --ink: #17191c;
+      --muted: #64696f;
+      --yellow: #fff0d6;
+      --background: #f6f7f5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: #e8ebef;
+      color: var(--ink);
+      font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", Arial, sans-serif;
+    }
+    [hidden] { display: none !important; }
+
+    /* 버튼은 실제 PC와 휴대폰 모두에서 사용 가능 */
+    .preview-toolbar {
+      position: fixed;
+      top: calc(14px + env(safe-area-inset-top, 0px));
+      right: calc(14px + env(safe-area-inset-right, 0px));
+      z-index: 20;
+    }
+    .view-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 1px solid #d0d3d8;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 18px rgba(25, 29, 36, 0.10);
+      color: #1d222a;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .view-toggle:hover { background: #fff8e9; }
+    .view-toggle:focus-visible { outline: 3px solid #3975d7; outline-offset: 3px; }
+    .view-toggle[aria-pressed="true"] { border-color: #eead42; background: #fff4d9; }
+
+    /* 기본 화면: 실제 PC/모바일 화면 전체를 사용 */
+    .preview-stage { width: 100%; min-height: 100vh; min-height: 100dvh; }
+    .device-shell { position: relative; width: 100%; height: 100vh; height: 100dvh; }
+    .phone-notch { display: none; }
+
+    .site-screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--background);
+      container-type: inline-size;
+      container-name: website;
+      isolation: isolate;
+    }
+
+    /* 꽃잎: 별도 이미지 없이 Canvas 도형으로 그림 */
+    #petal-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .screen-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      padding: 50px 20px 20px;
+    }
+    .content-wrap {
+      width: 100%;
+      max-width: 620px;
+      margin: auto;
+      text-align: center;
+    }
+    .construction-icon {
+      display: block;
+      margin: 0 0 6px;
+      font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+      font-size: clamp(80px, 17cqw, 110px);
+      line-height: 1.2;
+      filter: drop-shadow(0 8px 0 rgba(0, 0, 0, .07));
+    }
+    .error-code {
+      margin: 0;
+      padding-right: .09em;
+      font-size: clamp(55px, 12cqw, 85px);
+      font-weight: 900;
+      letter-spacing: -.09em;
+      line-height: 1;
+    }
+    .english-title {
+      margin: 12px 0 18px;
+      font-size: clamp(20px, 4.5cqw, 30px);
+      font-weight: 900;
+      letter-spacing: -.045em;
+      line-height: 1.2;
+    }
+    /* 경고 줄은 HTML에 남겨 두되 화면에는 표시하지 않습니다. */
+    .caution-line { display: none; }
+    .korean-title {
+      margin: 0 0 12px;
+      font-size: clamp(30px, 6.5cqw, 42px);
+      font-weight: 800;
+      letter-spacing: -.055em;
+    }
+    .description {
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.75;
+      word-break: keep-all;
+    }
+    .opening {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 9px;
+      max-width: 100%;
+      margin-top: 28px;
+      padding: 15px 22px;
+      border: 2px solid var(--ink);
+      border-radius: 10px;
+      background: var(--yellow);
+      font-size: clamp(15px, 4cqw, 20px);
+      font-weight: 800;
+      letter-spacing: -.025em;
+    }
+    .opening .calendar { flex: none; font-size: 22px; }
+    .opening-copy { white-space: nowrap; }
+    .wedding-couple {
+      flex: none;
+      font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+      font-size: clamp(19px, 5cqw, 25px);
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .footer {
+      margin: 20px 0 0;
+      color: #898d92;
+      font-size: 14px;
+    }
+
+    /* 실제 휴대폰과 데스크톱의 휴대폰 미리보기에서 똑같이 반응 */
+    @container website (max-width: 480px) {
+      .screen-content { padding: 48px 16px 26px; }
+      .english-title { margin-bottom: 22px; }
+      .description { font-size: 14px; }
+      .opening { padding: 13px 16px; gap: 6px; }
+      .opening .calendar { font-size: 20px; }
+    }
+    @container website (max-width: 350px) {
+      /* 350px 이하: 제목과 이모지/날짜가 화면 밖으로 나가지 않도록 크기를 유동 조절 */
+      .screen-content { padding: 44px 12px 20px; }
+      .construction-icon { font-size: clamp(62px, 19cqw, 80px); }
+      .error-code { font-size: clamp(48px, 15cqw, 55px); }
+      .english-title {
+        margin: 10px 0 20px;
+        font-size: clamp(16px, 5.5cqw, 20px);
+      }
+      .korean-title {
+        font-size: clamp(22px, 8cqw, 28px);
+        line-height: 1.25;
+        word-break: keep-all;
+      }
+      .description { font-size: 13px; line-height: 1.65; }
+      .opening {
+        padding: 12px 10px;
+        gap: 5px;
+        font-size: clamp(12px, 4cqw, 14px);
+      }
+      .opening .calendar { font-size: 18px; }
+      .wedding-couple { font-size: clamp(17px, 5.5cqw, 19px); }
+    }
+
+    @container website (max-width: 300px) {
+      /* 아주 좁은 프레임에서는 신랑/신부 이모지를 다음 줄로 배치 */
+      .screen-content { padding-right: 10px; padding-left: 10px; }
+      .korean-title { font-size: clamp(20px, 7.8cqw, 24px); }
+      .wedding-couple { flex-basis: 100%; text-align: center; }
+    }
+
+    /* 미리보기 상태: 안쪽은 실제 모바일 크기의 독립적인 스크롤 영역 */
+    .preview-stage.phone-mode {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      height: 100dvh;
+      padding: calc(64px + env(safe-area-inset-top, 0px)) 14px
+               calc(12px + env(safe-area-inset-bottom, 0px));
+      overflow: hidden;
+    }
+    .phone-mode .device-shell {
+      width: min(390px, 100%);
+      height: 100%;
+      max-height: 820px;
+      padding: 8px;
+      border: 2px solid #41454f;
+      border-radius: 44px;
+      background: #1b1d23;
+      box-shadow: 0 20px 55px rgba(20, 22, 27, .30),
+                  inset 0 0 0 1px #6c717b;
+    }
+    .phone-mode .site-screen { border-radius: 35px; }
+    .phone-mode .screen-content { padding-top: 52px; }
+    .phone-mode .phone-notch {
+      display: block;
+      position: absolute;
+      z-index: 5;
+      top: 12px;
+      left: 50%;
+      width: 92px;
+      height: 25px;
+      transform: translateX(-50%);
+      border-radius: 20px;
+      background: #1b1d23;
+      pointer-events: none;
+    }
+    .phone-mode .phone-notch::after {
+      content: "";
+      position: absolute;
+      top: 9px;
+      left: 30px;
+      width: 32px;
+      height: 5px;
+      border-radius: 10px;
+      background: #383c45;
+    }
+
+    @media (max-width: 480px) {
+      .preview-toolbar { right: calc(10px + env(safe-area-inset-right, 0px)); }
+      .view-toggle { min-height: 42px; padding: 9px 13px; font-size: 12px; }
+      .preview-stage.phone-mode { padding-left: 11px; padding-right: 11px; }
+      .phone-mode .device-shell { border-radius: 37px; padding: 6px; }
+      .phone-mode .site-screen { border-radius: 29px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .view-toggle { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 배포 시 방문자에게 전환 버튼을 숨기려면 아래 JS의 SHOW_PREVIEW_TOOLBAR를 false로 변경 -->
+  <div class="preview-toolbar" id="preview-toolbar">
+    <button type="button" class="view-toggle" id="view-toggle" aria-pressed="false"
+            aria-controls="preview-stage">
+      <span id="toggle-icon" aria-hidden="true">📱</span>
+      <span id="toggle-label">스마트폰 프레임 보기</span>
+    </button>
+  </div>
+
+  <div class="preview-stage" id="preview-stage">
+    <div class="device-shell">
+      <div class="phone-notch" aria-hidden="true"></div>
+      <section class="site-screen" id="site-screen" aria-label="서비스 오픈 안내">
+        <canvas id="petal-canvas" aria-hidden="true"></canvas>
+        <div class="screen-content">
+          <main class="content-wrap">
+            <span class="construction-icon" role="img" aria-label="공사 안내 표지">🚧</span>
+            <h1 class="error-code">404</h1>
+            <p class="english-title">UNDER CONSTRUCTION <br><br></p>
+            <div class="caution-line" aria-hidden="true"></div>
+            <h2 class="korean-title">🌸  새단장 중입니다  🌸</h2>
+            <p class="description">
+              더 나은 서비스를 제공하기 위해 준비하고 있습니다.<br>
+              새로운 모습으로 곧 찾아뵙겠습니다.
+            </p>
+            <div class="opening" aria-label="2026년 12월 1일 대고객 오픈, 신랑과 신부">
+              <span class="calendar" aria-hidden="true"> 🗓️</span>
+              <span class="opening-copy">대고객 오픈 - 2026.12.01</span>
+              <span class="wedding-couple" aria-hidden="true">🤵‍♂️👰‍♀️</span>
+            </div>
+            <p class="footer">이용에 불편을 드려 죄송합니다.</p>
+          </main>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    'use strict';
+
+    // 제작 중 미리보기 버튼 노출: 대고객 공개 시 false로 전환 권장
+    const SHOW_PREVIEW_TOOLBAR = true;
+    
+    const toolbar = document.getElementById('preview-toolbar');
+    const toggleButton = document.getElementById('view-toggle');
+    const stage = document.getElementById('preview-stage');
+    const toggleLabel = document.getElementById('toggle-label');
+    const toggleIcon = document.getElementById('toggle-icon');
+
+    if (!SHOW_PREVIEW_TOOLBAR) toolbar.hidden = true;
+
+    function setPhoneMode(enabled) {
+      stage.classList.toggle('phone-mode', enabled);
+      toggleButton.setAttribute('aria-pressed', String(enabled));
+      toggleIcon.textContent = enabled ? '🖥️' : '📱';
+      toggleLabel.textContent = enabled ? '전체 화면으로 보기' : '스마트폰 프레임 보기';
+    }
+
+    toggleButton.addEventListener('click', () => {
+      setPhoneMode(!stage.classList.contains('phone-mode'));
+    });
+
+    // 전체 페이지가 아닌 현재 표시 영역을 기준으로 꽃잎을 그립니다.
+    // 따라서 모바일 프레임 전환 후에도 화면 안에서만 꽃잎이 움직입니다.
+    function initPetalCanvas() {
+      const screen = document.getElementById('site-screen');
+      const canvas = document.getElementById('petal-canvas');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const colors = [
+        'rgba(244, 173, 185, 0.72)',
+        'rgba(255, 205, 210, 0.72)',
+        'rgba(251, 224, 220, 0.83)',
+        'rgba(242, 182, 163, 0.68)',
+        'rgba(255, 228, 198, 0.70)'
+      ];
+
+      let w = 1;
+      let h = 1;
+      let ratio = 1;
+      let petals = [];
+      let rafId = null;
+      let lastFrame = 0;
+
+      function makePetal(randomY = false) {
+        return {
+          x: Math.random() * w,
+          y: randomY ? Math.random() * h : -12 - Math.random() * 60,
+          r: 3 + Math.random() * 5,
+          vx: -0.35 + Math.random() * 0.7,
+          vy: 0.45 + Math.random() * 0.85,
+          angle: Math.random() * Math.PI * 2,
+          spin: (Math.random() < 0.5 ? -1 : 1) *
+                (0.008 + Math.random() * 0.025),
+          sway: Math.random() * Math.PI * 2,
+          swaySpeed: 0.01 + Math.random() * 0.018,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        };
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        for (const p of petals) {
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.angle);
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.ellipse(0, 0, p.r, p.r * .62, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      function resize() {
+        const rect = screen.getBoundingClientRect();
+        const nextW = Math.max(1, Math.round(rect.width));
+        const nextH = Math.max(1, Math.round(rect.height));
+        const nextRatio = Math.min(window.devicePixelRatio || 1, 2);
+        if (w === nextW && h === nextH && ratio === nextRatio && petals.length) return;
+
+        w = nextW;
+        h = nextH;
+        ratio = nextRatio;
+        canvas.width = Math.round(w * ratio);
+        canvas.height = Math.round(h * ratio);
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        const count = w < 600 ? 30 : 55;
+        petals = Array.from({ length: count }, () => makePetal(true));
+        draw();
+      }
+
+      // 30fps 제한으로 모바일 배터리 및 CPU 사용량 감소
+      function animate(time) {
+        rafId = requestAnimationFrame(animate);
+        if (time - lastFrame < 1000 / 30) return;
+        const step = lastFrame ? Math.min((time - lastFrame) / 16.667, 2.5) : 1;
+        lastFrame = time;
+
+        for (let i = 0; i < petals.length; i++) {
+          const p = petals[i];
+          p.sway += p.swaySpeed * step;
+          p.x += (p.vx + Math.sin(p.sway) * .52) * step;
+          p.y += p.vy * step;
+          p.angle += p.spin * step;
+          if (p.y > h + 15) petals[i] = makePetal();
+          else if (p.x < -20) p.x = w + 20;
+          else if (p.x > w + 20) p.x = -20;
+        }
+        draw();
+      }
+
+      function syncAnimation() {
+        if (rafId !== null) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+        lastFrame = 0;
+        if (!motionPreference.matches && !document.hidden) {
+          rafId = requestAnimationFrame(animate);
+        } else {
+          draw();
+        }
+      }
+
+      if ('ResizeObserver' in window) {
+        new ResizeObserver(resize).observe(screen);
+      } else {
+        window.addEventListener('resize', resize, { passive: true });
+      }
+      document.addEventListener('visibilitychange', syncAnimation);
+      if (motionPreference.addEventListener) {
+        motionPreference.addEventListener('change', syncAnimation);
+      } else if (motionPreference.addListener) {
+        motionPreference.addListener(syncAnimation);
+      }
+      resize();
+      syncAnimation();
+    }
+
+    initPetalCanvas();
+  </script>
+</body>
+</html>
