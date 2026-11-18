@@ -12,7 +12,7 @@
 
   <!-- ★ 날짜를 변경한다면 아래 description/title, 본문 날짜, aria-label도 확인하세요. -->
   <meta name="description" content="새로운 서비스를 준비 중입니다. 2026년 12월 1일 대고객 오픈 예정입니다.">
-  <title>공사중 | 2026.12.01 대고객 오픈</title>
+  <title>청첩장공사중 | 2026.12.01 대고객 오픈</title>
 
   <style>
     /* ======================================================================
@@ -77,11 +77,12 @@
       box-sizing: border-box; /* padding·테두리 포함해 요소 크기 계산 */
     }
 
-    html { -webkit-text-size-adjust: 100%; } /* iPhone 자동 글자 확대 방지 */
+    html { -webkit-text-size-adjust: 100%;
+           background-color: var(--background); } /* iPhone 자동 글자 확대 방지 */
 
     body {
       margin: 0;                  /* 브라우저 기본 바깥 여백 제거 */
-      background: #e8ebef;       /* '스마트폰 프레임 보기' 바깥쪽 회색 배경 */
+      background: car(--background);       /* '스마트폰 프레임 보기' 바깥쪽 회색 배경 */
       color: var(--ink);
       font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", Arial, sans-serif;
     }
